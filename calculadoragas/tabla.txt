@@ -1,0 +1,19 @@
+CREATE TABLE preciogas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estado VARCHAR(100) NOT NULL,
+    municipio VARCHAR(100) NOT NULL,
+    precio_por_kilo FLOAT NOT NULL,
+    precio_por_litro FLOAT NOT NULL,
+    UNIQUE (estado, municipio) 
+);
+
+
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Ciudad de México', 'Álvaro Obregón', 20.44, 11.05),
+('Ciudad de México', 'Coyoacán', 20.44, 11.05),
+('Estado de México', 'Toluca', 20.92, 11.31),
+('Estado de México', 'Naucalpan', 20.92, 11.31),
+('Chiapas', 'Tuxtla Gutiérrez', 20.24, 10.94),
+('Chiapas', 'San Cristóbal de las Casas', 20.15, 10.89),
+('Jalisco', 'Guadalajara', 19.93, 10.78),
+('Jalisco', 'Zapopan', 19.93, 10.78);
