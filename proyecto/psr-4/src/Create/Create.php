@@ -10,7 +10,6 @@ class Create extends DataBase {
 
     public function add($report) {
         // Decodificar el JSON recibido en un array asociativo
-
         $data1 = json_decode($report, true);
 
         if (!$data1) {
