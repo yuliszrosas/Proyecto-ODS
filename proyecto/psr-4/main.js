@@ -11,7 +11,7 @@ $(document).ready(function () {
 	const years = [];
 	const values = [];
     const datasets = [];
-	//const apiUrl = 'https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/6207048676/es/0700/false/BISE/2.0/bc51cc8e-51be-7c4b-2173-50723fcb1168?type=json';
+	const apiUrl = 'https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/6207048676/es/0700/false/BISE/2.0/bc51cc8e-51be-7c4b-2173-50723fcb1168?type=json';
 
     // Lista de estados con sus códigos geográficos
     const estados = [
@@ -302,19 +302,51 @@ $(document).ready(function () {
         finalJSON['energia'] = $('#usaEnergia').val();
         finalJSON['municipio'] = $('#municipio').val();
         finalJSON['lena'] = $('#usalen').val();
-        finalJSON['natural'] = $('#usaGas').val();
+        finalJSON['gasnatural'] = $('#usaGas').val();
         finalJSON['lp'] = $('#usaLP').val();
         finalJSON['cantidad'] = $('#gas-amount').val();
         finalJSON['costo'] = $('#gas-cost').val();
 		finalJSON['fecha'] = $('#fecha').val();
         console.log(finalJSON);
 
-
-        // Verifica que todos los campos obligatorios estén llenos
-        if (!validarJSON(finalJSON)) {
-            //$('#container').html('Por favor, llena todos los campos requeridos.');
-            //$('#product-result').removeClass('d-none').addClass('d-block');
+        if (!validarCamposVacios(finalJSON)) {
+            $('#container').html('Por favor, llena todos los campos requeridos.');
+            $('#product-result').removeClass('d-none').addClass('d-block');
             return; // Detiene el envío si faltan datos
         }
+
+
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/procesar-reporte', 
+            type: 'POST',
+            data: JSON.stringify(finalJSON),
+            success: function (response) {
+                if (typeof response === 'string') {
+                    response = JSON.parse(response); // Convierte la cadena JSON en un objeto
+                }
+                console.log(response);
+
+                if (response.success) {
+                    $('#container').html('Reporte agregado correctamente.');
+                    $('#product-result').removeClass('d-none').addClass('d-block');
+                } else {
+                    $('#container').html('Reporte no agregado.'); // Limpiar mensaje de error si no existe
+                    $('#product-result').removeClass('d-none').addClass('d-block');
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#response-message').text('Hubo un error al enviar el reporte.');
+                console.error(error);
+            }
+        });
     });
+
+    function validarCamposVacios(json) {
+        for (let key in json) {
+            if ((!json[key] || json[key].trim() === '')) {
+                return false; // Si algún campo está vacío, retorna falso
+            }
+        }
+        return true; // Si todos los campos están llenos, retorna verdadero
+    }
 });
