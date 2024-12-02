@@ -164,6 +164,19 @@ main{
 	justify-content: space-between;
 }
 
+header {
+    display: flex; /* Usar Flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    height: 100px; /* Ajustar la altura del encabezado según sea necesario */
+    background-color: #f1f1f1; /* Color de fondo del encabezado, opcional */
+}
+
+.header-content {
+    text-align: center; /* Centrar texto dentro del contenedor */
+}
+
+
 .cards{
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -206,6 +219,10 @@ main{
 .card-head small{
 	font-weight: 600;
 	color: #555;
+}
+
+small {
+    display: block; /* Asegurarse de que esté en una nueva línea */
 }
 
 table {
@@ -497,4 +514,25 @@ textarea.form-control {
 /* Añadir una sombra cuando se pasa el ratón por encima */
 .dispositivos-container:hover {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/*card-single*/
+.card-single {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    flex-direction: column; /* Permite que los elementos se apilen verticalmente */
+    text-align: center; /* Centra el texto */
+    /* Añadir un margen o padding si es necesario */
+}
+
+.card-flex {
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+}
+
+.card-info {
+    width: 100%; /* O un valor específico */
+    padding: 10px; /* Espaciado interno */
 }
