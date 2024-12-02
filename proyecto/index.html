@@ -6,7 +6,7 @@
 	<title>Energía consciente</title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="main.js"></script>
@@ -125,14 +125,21 @@
 								<small>Información del formulario<br></small>
 							</div>
 						</div>
-
+						<div id="myModal" class="modal">
+							<div class="modal-content">
+							  <span class="close">&times;</span>
+							  <canvas id="modalChart"></canvas> 
+							</div>
+						</div>
 						<div class="cards">
 							<div class="card-single">
 								<div class="card-flex">
+									<canvas id="solarChart"></canvas>
 									<div class="card-info">
 										<div class="card-head">
 											<span>Dependencia de combustibles fósiles en viviendas</span>
 											<small>Porcentaje de viviendas que utilizan Gas LP, leña y gas natural como fuentes principales de energía</small>
+											<button id="verCombustibles" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
 								</div>
@@ -140,10 +147,12 @@
 
 							<div class="card-single">
 								<div class="card-flex">
+									<canvas id="solarChart"></canvas>
 									<div class="card-info">
 										<div class="card-head">
 											<span>Adopción de energías renovables en viviendas</span>
 											<small>Porcentaje de viviendas que tienen calentadores solares de agua</small>
+											<button id="verViviendas" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
 								</div>
@@ -151,14 +160,42 @@
 
 							<div class="card-single">
 								<div class="card-flex">
+									<canvas id="GraficaViviendas"></canvas>
 									<div class="card-info">
 										<div class="card-head">
 											<span>Gasto promedio en energía de los hogares y cómo este gasto se distribuye entre diferentes combustibles (gas LP, gas natural, leña)</span>
 											<small>Comparación del gasto promedio en energía por tipo de combustible (Gas LP, leña, electricidad)</small>
+											<button id="verMas" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="full-width-section" id="tabla">
+								<table id="datosSolar">
+									<thead>
+										<tr>
+											<th>Estado</th>
+											<th>Año</th>
+											<th>Porcentaje</th>
+										</tr>
+									</thead>
+									<tbody id="dataTable">
+										<!-- Datos cargados dinámicamente -->
+									</tbody>
+								</table>
+								<table id="datosGasto">
+									<thead >
+										<tr>
+											<th>Año</th>
+											<th>Gasto en Pesos</th>
+										</tr>
+									</thead>
+									<tbody id="dataTable3">
+										<!-- Datos cargados dinámicamente -->
+									</tbody>
+								</table>
+							</div>
+
 						</div>
 
 
