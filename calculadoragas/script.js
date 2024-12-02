@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const jsonData = JSON.parse(data); 
                 resultado.innerHTML = `
                     <p>Precio por ${jsonData.tipoUnidad}: $${jsonData.precio.toFixed(2)} MXN</p>
-                    <p>Gasto promedio mensual: $${jsonData.gastoActual.toFixed(2)} MXN</p>
+                    <p>Gasto estimado mensual: $${jsonData.gastoActual.toFixed(2)} MXN</p>
                     <p>Ahorro estimado: $${jsonData.ahorro.toFixed(2)} MXN</p>
                 `;
             } catch (error) {
