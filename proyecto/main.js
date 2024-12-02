@@ -23,12 +23,24 @@ $(document).ready(function () {
 
 	// Mostrar la tabla de Calentadores solares al hacer clic en el botón
     $("#verViviendas").click(function () {
+		$("#Titulo").html("<h2>Adopción de energías renovables en viviendas</h2>");
+		$("#descripcion").html(`
+			<small>
+				En el gráfico y la tabla se presentará el porcentaje de viviendas que cuentan con calentadores solares de agua en cada estado. El eje horizontal (X) representará los estados, mientras que el eje vertical (Y) mostrará el porcentaje de viviendas con esta tecnología. Cada barra o punto en el gráfico reflejará el porcentaje específico para cada estado, permitiendo comparar visualmente la adopción de calentadores solares entre las diferentes regiones del país.
+			</small>
+		`);
 		$("#datosSolar").show();
 		$("#datosGasto").hide();
         $("#tabla").toggle();
     });
 	// Mostrar la tabla de Gastos al hacer clic en el botón
 	$("#verMas").click(function () {
+		$("#Titulo").html("<h2>Gasto promedio trimestral en vivienda y combustibles</h2>");
+		$("#descripcion").html(`
+			<small>
+				El gráfico y la tabla mostrarían la evolución del gasto promedio trimestral que realizan los hogares en conceptos de vivienda y combustibles, expresado en pesos. El eje horizontal (X) representaría los trimestres o años, mientras que el eje vertical (Y) mostraría el gasto promedio en pesos. Cada punto o barra en el gráfico reflejaría el gasto estimado por trimestre en función de los datos recolectados. Esto permitiría visualizar cómo ha cambiado este gasto a lo largo del tiempo, facilitando la comparación de las tendencias en diferentes periodos.
+			</small>
+		`);
 		$("#datosSolar").hide();
 		$("#datosGasto").show();
         $("#tabla").toggle();

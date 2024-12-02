@@ -151,7 +151,7 @@
 									<div class="card-info">
 										<div class="card-head">
 											<span>Adopción de energías renovables en viviendas</span>
-											<small>Porcentaje de viviendas que tienen calentadores solares de agua</small>
+											<small>Porcentaje de viviendas que tienen calentadores solares de agua en cada estado.</small>
 											<button id="verViviendas" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
@@ -163,15 +163,20 @@
 									<canvas id="GraficaViviendas"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Gasto promedio en energía de los hogares y cómo este gasto se distribuye entre diferentes combustibles (gas LP, gas natural, leña)</span>
-											<small>Comparación del gasto promedio en energía por tipo de combustible (Gas LP, leña, electricidad)</small>
+											<span>Gasto promedio trimestral en vivienda y combustibles (Pesos)</span>
+											<small>Evolución del gasto promedio trimestral en vivienda y combustibles, expresado en pesos, a lo largo del tiempo</small>
 											<button id="verMas" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="full-width-section" id="tabla">
+								<div id="Titulo" class="justificado-centrado"></div>
+								<div class="card-single-info">
+									<div class="card-head-info" id="descripcion"></div>
+								</div>
 								<table id="datosSolar">
+									
 									<thead>
 										<tr>
 											<th>Estado</th>
@@ -182,6 +187,7 @@
 									<tbody id="dataTable">
 										<!-- Datos cargados dinámicamente -->
 									</tbody>
+									
 								</table>
 								<table id="datosGasto">
 									<thead >
@@ -194,6 +200,7 @@
 										<!-- Datos cargados dinámicamente -->
 									</tbody>
 								</table>
+								
 							</div>
 
 						</div>

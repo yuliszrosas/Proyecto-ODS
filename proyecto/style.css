@@ -177,6 +177,15 @@ main{
 	align-items: center;
 	justify-content: flex-start;
 }
+.card-single-info{
+	background: #fff;
+	padding: 1rem;
+	box-shadow: 4px 4px 3px rgb(255, 255, 255);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
 
 .card-flex{
 	display: flex;
@@ -267,6 +276,32 @@ th {
     text-align: center; /* Centra el texto */
 	display: flex;
 }
+
+.card-head-info {
+    flex-direction: column; /* Coloca los elementos en columna */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    height: 100%; /* Asegura que use toda la altura disponible */
+    text-align: justify; /* Centra el texto */
+	display: flex;
+}
+.justificado-centrado {
+    text-align: justify; /* Justifica el texto */
+    max-width: 600px; /* Define un ancho para limitar la extensión */
+    margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+.card-head-info span{
+	display: block;
+	text-transform: uppercase;
+	color: #ffffff;
+	font-size: .9rem;
+}
+
+.card-head-info small{
+	font-weight: 600;
+	color: #555;
+}
+
 /* Estilo base del botón */
 .btn {
 	margin-top: 15px; /* Opcional: espacio superior */
