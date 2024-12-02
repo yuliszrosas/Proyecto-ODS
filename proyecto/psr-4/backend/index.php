@@ -6,7 +6,7 @@ use Slim\Factory\AppFactory;
 
 
 use Gonza\Proyecto\Create\Create as Create;
-
+use Gonza\Proyecto\Read\Read as Read;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -31,8 +31,17 @@ $app->post('/procesar-reporte', function (Request $request, Response $response, 
             "error" => "Error al agregar el reporte: " . $e->getMessage()
         ];
         $response->getBody()->write(json_encode($errorData));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        return $response->withHeader('Content-Type', 'application/json');
     }
+});
+// Definir la ruta para obtener los datos de los combustibles
+$app->get('/contar-combustibles', function ($request, $response, $args) {
+    $read = new Read('energia');
+    $data = $read->contarCombustibles();
+    $response->getBody()->write(json_encode($data));
+
+    // Establecer el tipo de contenido a 'application/json' para la respuesta
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/hola/{nombre}', function ($request, $response, $args) {

@@ -9,8 +9,10 @@ $(document).ready(function () {
     const formato = "json";
 	// Arrays para los años y los valores
 	const years = [];
-	const values = [];
+	let values1 = [];
     const datasets = [];
+    let chartInstance; // Variable global para almacenar la instancia del gráfico
+    let chartInstance1;
 	const apiUrl = 'https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/6207048676/es/0700/false/BISE/2.0/bc51cc8e-51be-7c4b-2173-50723fcb1168?type=json';
 
     // Lista de estados con sus códigos geográficos
@@ -122,6 +124,7 @@ $(document).ready(function () {
                 responsive: true,
                 plugins: {
                     legend: {
+                        display: false,
                         position: "top",
                     },
                 },
@@ -148,9 +151,12 @@ $(document).ready(function () {
     $('#solarChart').click(function () {
         $('#myModal').show();
         // Redibujar la gráfica en el modal
-        var modalChart = $('#modalChart')[0].getContext("2d"); // Obtener el contexto del canvas
-
-        new Chart(modalChart, {
+        var ctx = $('#modalChart')[0].getContext("2d"); // Obtener el contexto del canvas
+        // Verificar si ya existe un gráfico en el canvas y destruirlo
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: estados.map(e => e.nombre), // Mostrar nombres de estados como etiquetas
@@ -160,6 +166,7 @@ $(document).ready(function () {
                 responsive: true,
                 plugins: {
                     legend: {
+                        display: false,
                         position: "top",
                     },
                 },
@@ -198,16 +205,19 @@ $(document).ready(function () {
 	// Evento de clic al gráfico para abrir el modal
 	$('#GraficaViviendas').click(function () {
 		// Mostrar el modal
+        // Verificar si ya existe un gráfico en el canvas
         $('#myModal').show();
 
         const ctx = $('#modalChart')[0].getContext('2d');
-        new Chart(ctx, {
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
             type: 'line', // Tipo de gráfica
             data: {
                 labels: years, 
                 datasets: [{
-                    label: 'Gasto total promediopor hogar en vivienda y combustibles ',
-                    data: values, // Datos de los valores observados
+                    data: values1, // Datos de los valores observados
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                     fill: false
@@ -215,6 +225,16 @@ $(document).ready(function () {
             },
             options: {
                 responsive: true,
+                plugins: {
+                    title: {
+                        display: true, // Activa el título
+                        text: 'Gasto total promedio por hogar en vivienda y combustibles' // Título de la gráfica
+                    },
+                    legend: {
+                        display: false,
+                        position: 'top', // Leyenda en la parte superior
+                    }
+                },
                 scales: {
 					x: { // Configuración del eje X
 						title: {
@@ -240,13 +260,13 @@ $(document).ready(function () {
     $.getJSON(apiUrl, function(data) {
         // Datos de la respuesta
         const series = data.Series[0].OBSERVATIONS;
-
+        const values= [];
         // Recorrer las observaciones y extraer los datos
         $.each(series, function(index, item) {
             years.push(item.TIME_PERIOD);
             values.push(parseFloat(item.OBS_VALUE));
         });
-
+        values1 = values;
         // Crear la gráfica utilizando Chart.js
         const ctx = $('#GraficaViviendas')[0].getContext('2d');
         new Chart(ctx, {
@@ -254,7 +274,6 @@ $(document).ready(function () {
             data: {
                 labels: years, // Etiquetas (años)
                 datasets: [{
-                    label: 'Gasto total promediopor hogar en vivienda y combustibles ',
                     data: values, // Datos de los valores observados
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
@@ -263,6 +282,16 @@ $(document).ready(function () {
             },
             options: {
                 responsive: true,
+                plugins: {
+                    title: {
+                        display: true, // Activa el título
+                        text: 'Gasto total promedio por hogar en vivienda y combustibles' // Título de la gráfica
+                    },
+                    legend: {
+                        display: false,
+                        position: 'top', // Leyenda en la parte superior
+                    }
+                },
                 scales: {
 					x: { // Configuración del eje X
 						title: {
@@ -293,7 +322,7 @@ $(document).ready(function () {
 
     // Ejecutar la función
     //fetchData();
-
+    actualizarGrafica();
 	// Función para agregar reporte
     $('#report-form').submit( function (e) {
         e.preventDefault();    
@@ -329,6 +358,7 @@ $(document).ready(function () {
                 if (response.success) {
                     $('#container').html('Reporte agregado correctamente.');
                     $('#product-result').removeClass('d-none').addClass('d-block');
+                    actualizarGrafica();
                 } else {
                     $('#container').html('Reporte no agregado.'); // Limpiar mensaje de error si no existe
                     $('#product-result').removeClass('d-none').addClass('d-block');
@@ -349,4 +379,150 @@ $(document).ready(function () {
         }
         return true; // Si todos los campos están llenos, retorna verdadero
     }
+    function actualizarGrafica() {
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-combustibles', // Ruta del archivo PHP que obtiene los datos
+            method: 'GET',
+            success: function(data) {
+                console.log(data);
+                const labels = ['Leña', 'Gas Natural', 'Gas LP']; // Las etiquetas de la gráfica
+                const values = [data.contarLena, data.contarGasNatural, data.contarLP]; // Los valores a graficar
+                const ctx = $('#combustibleChart')[0].getContext('2d');
+                if (chartInstance1) {
+                    chartInstance1.destroy();
+                }
+                chartInstance1 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Etiquetas (tipos de combustible)
+                        datasets: [{
+                            data: values, // Datos (número de personas que usan cada combustible)
+                            backgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`], // Colores para cada barra
+                            borderColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true, // Activa el título
+                                text: 'Dependencia de Combustibles Fosiles' // Título de la gráfica
+                            },
+                            legend: {
+                                display: false,
+                                position: 'top', // Leyenda en la parte superior
+                                labels: {
+                                    generateLabels: function(chart) {
+                                        return chart.data.labels.map((label, index) => ({
+                                            text: label, // Los textos de la leyenda
+                                            fillStyle: chart.data.datasets[0].backgroundColor[index], // El color de fondo de cada barra
+                                            strokeStyle: chart.data.datasets[0].borderColor[index] // El color del borde de cada barra
+                                        }));
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    // Calcular el porcentaje de cada barra
+                                    label: function(tooltipItem) {
+                                        const total = values.reduce((acc, value) => acc + value, 0);
+                                        const percentage = ((tooltipItem.raw / total) * 100).toFixed(2);
+                                        return `${tooltipItem.raw} personas (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true, 
+                                    text: 'Num. Personas' // Título del eje Y
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                alert('Error al obtener los datos.');
+            }
+        });
+    }
+
+    // Evento de clic al gráfico para abrir el modal
+	$('#combustibleChart').click(function () {
+
+        $('#myModal').show();
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-combustibles', // Ruta del archivo PHP que obtiene los datos
+            method: 'GET',
+            success: function(data) {
+                console.log(data);
+                const labels = ['Leña', 'Gas Natural', 'Gas LP']; // Las etiquetas de la gráfica
+                const values = [data.contarLena, data.contarGasNatural, data.contarLP]; // Los valores a graficar
+                const ctx = $('#modalChart')[0].getContext('2d');
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                chartInstance =new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Etiquetas (tipos de combustible)
+                        datasets: [{
+                            data: values, // Datos (número de personas que usan cada combustible)
+                            backgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`], // Colores para cada barra
+                            borderColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true, // Activa el título
+                                text: 'Dependencia de Combustibles Fosiles' // Título de la gráfica
+                            },
+                            legend: {
+                                display: false,
+                                position: 'top', // Leyenda en la parte superior
+                                labels: {
+                                    generateLabels: function(chart) {
+                                        return chart.data.labels.map((label, index) => ({
+                                            text: label, // Los textos de la leyenda
+                                            fillStyle: chart.data.datasets[0].backgroundColor[index], // El color de fondo de cada barra
+                                            strokeStyle: chart.data.datasets[0].borderColor[index] // El color del borde de cada barra
+                                        }));
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    // Calcular el porcentaje de cada barra
+                                    label: function(tooltipItem) {
+                                        const total = values.reduce((acc, value) => acc + value, 0);
+                                        const percentage = ((tooltipItem.raw / total) * 100).toFixed(2);
+                                        return `${tooltipItem.raw} personas (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true, 
+                                    text: 'Num. Personas' // Título del eje Y
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                alert('Error al obtener los datos.');
+            }
+        });
+
+	}); 
+
 });
