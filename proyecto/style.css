@@ -8,8 +8,10 @@
 }
 
 body{
+	
 	background: #D4D4D4;
 	font-family: 'Open sans';
+	display: flex;
 }
 
 .wrap{
@@ -84,6 +86,7 @@ ul.tabs li a .tab-text{
 
 /*Texto dentro del tab*/
 body {
+	display: flex;
     background: #EAEDED;
     font-family: 'Open Sans', sans-serif;
 }
@@ -290,6 +293,11 @@ th {
     max-width: 600px; /* Define un ancho para limitar la extensión */
     margin: 0 auto; /* Centra horizontalmente el contenedor */
 }
+.justificado-centrado1 {
+    text-align: center; /* Justifica el texto */
+    max-width: 600px; /* Define un ancho para limitar la extensión */
+    margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
 .card-head-info span{
 	display: block;
 	text-transform: uppercase;
@@ -337,4 +345,156 @@ th {
         font-size: 14px; /* Ajusta tamaño de letra */
         padding: 8px 16px; /* Reduce el espaciado */
     }
+}
+
+
+/* Estilos específicos para el formulario */
+.google-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    margin: 20px auto; /* Centrado */
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+	display: flex;
+    justify-content: center;  
+}
+
+.floating-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 14px;
+    color: #aaa;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+.form-control {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #fff;
+    outline: none;
+	color: #aaa;
+}
+
+.form-control:focus {
+    border-color: #4285f4;
+    box-shadow: 0 0 4px rgba(66, 133, 244, 0.4);
+}
+
+.form-control:focus + .floating-label,
+.form-control:not(:placeholder-shown) + .floating-label {
+    top: -10px;
+    font-size: 12px;
+    color: #4285f4;
+}
+
+textarea.form-control {
+    resize: none;
+    height: 100px;
+}
+
+.submit-button {
+    background: #4285f4;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-button:hover {
+    background: #306bb4;
+}
+
+.dispositivos-container {
+	font-family: Arial, sans-serif;
+	margin: 20px 0;
+	padding: 10px;
+	background-color: #f4f4f9;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dispositivos-container label {
+	font-size: 16px;
+	font-weight: 600;
+	display: block;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+/* Estilo para los checkboxes */
+.dispositivos-container input[type="checkbox"] {
+	margin-right: 10px;
+	transform: scale(1.2);
+	vertical-align: middle;
+}
+
+/* Estilo para las etiquetas de los checkboxes */
+.dispositivos-container input[type="checkbox"] + label {
+	font-size: 14px;
+	margin-right: 20px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.dispositivos-container input[type="checkbox"]:checked + label {
+	color: #4CAF50; /* Color verde cuando está marcado */
+}
+
+.dispositivos-container input[type="checkbox"]:hover + label {
+	color: #007bff; /* Color azul cuando el ratón pasa sobre la etiqueta */
+}
+
+/* Espaciado entre las opciones */
+.dispositivos-container input[type="checkbox"] + label {
+	margin-bottom: 10px;
+}
+
+/* Fondo de las opciones */
+.dispositivos-container input[type="checkbox"]:checked {
+	background-color: #4CAF50;
+}
+
+.dispositivos-container div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* Estilo para la respuesta al marcar una opción */
+.dispositivos-container div label {
+	width: 200px;
+	margin-right: 20px;
+}
+
+.dispositivos-container div input {
+	margin-bottom: 10px;
+}
+
+/* Hacer que el contenedor sea más atractivo */
+.dispositivos-container {
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	padding: 20px;
+	background-color: #ffffff;
+}
+
+/* Añadir una sombra cuando se pasa el ratón por encima */
+.dispositivos-container:hover {
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

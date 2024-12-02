@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="main.js"></script>
 	
@@ -105,7 +105,93 @@
 				
 			</article>
 			<article id="tab2">
-				<!-- formulario -->
+				
+				<form id="report-form" class="google-form">
+					<div class="form-group">
+						<h2 >Reporte de Energías Renovables</h2>
+					</div>
+					<div class="form-group">
+						<input type="number" id="num-miembros" class="form-control" placeholder="Número de miembros en la familia:" >
+					</div>
+					<div class="form-group">
+						<select id="usaEnergia" name="usaEnergia" class="form-control" >
+							<option value="" >¿Utiliza energías renovables?</option>
+							<option value="si">Sí</option>
+							<option value="no">No</option>
+						</select>
+					</div>
+					<!--
+					<div class="dispositivos-container">
+						<label>¿Cuenta con alguno de los siguientes dispositivos ?</label><br>
+						<div class="form-group">
+							<input type="checkbox" id="panel_solar" name="dispositivos[]" value="Panel solar"  >
+							<label for="panel_solar">Panel solar</label><br>	
+						</div>
+						<div class="form-group">
+							<input type="checkbox" id="calentador_solar" name="dispositivos[]" value="Calentador solar">
+							<label for="calentador_solar">Calentador solar</label><br>
+						</div>
+						<div class="form-group">
+							<input type="checkbox" id="turbina_eolica" name="dispositivos[]" value="Turbina eólica">
+							<label for="turbina_eolica">Turbina eólica</label><br>
+						</div>
+					</div>-->
+					
+				
+					 <!-- Estado: lista desplegable -->
+					 <div class="form-group">
+						<select id="municipio" class="form-control" >
+							<option value="">Seleccione su municipio</option>
+							<option value="Puebla">Puebla</option>
+							<option value="Tehuacán">Tehuacán</option>
+							<option value="Atlixco">Atlixco</option>
+							<option value="San Martín Texmelucan">San Martín Texmelucan</option>
+							<option value="Cholula">Cholula</option>
+							<option value="San Andrés Cholula">San Andrés Cholula</option>
+							<option value="Huejotzingo">Huejotzingo</option>
+							<option value="Amozoc">Amozoc</option>
+							<option value="Tecamachalco">Tecamachalco</option>
+							<option value="Libres">Libres</option>
+							<option value="Zacatlán">Zacatlán</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<select id="usalen" class="form-control" >
+							<option value="" >¿Utilizas leña como fuente de energía en tu hogar?</option>
+							<option value="si">Sí</option>
+							<option value="no">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<select id="usaGas" class="form-control" >
+							<option value="" >¿Utilizas gas natural como fuente de energía en tu hogar?</option>
+							<option value="si">Sí</option>
+							<option value="no">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<select id="usaLP" class="form-control" >
+							<option value="" >¿Usa gas LP en su hogar?</option>
+							<option value="si">Sí</option>
+							<option value="no">No</option>
+						</select>
+					</div>
+					<!-- ¿Cuántos cilindros o kilos de gas LP utiliza al mes? -->
+					<div class="form-group" >
+						<input type="number" id="gas-amount" class="form-control" placeholder="Cantidad en cilindros/kilos al mes" min="0" >
+					</div>
+					<div class="form-group" >
+						<input type="number" id="gas-cost" class="form-control" step="0.01" placeholder="Costo promedio mensual de consumo de gas LP ($ MXN)" min="0" >
+					</div>
+					<div class="form-group">
+						<label for="fecha">Fecha del Reporte</label>
+						<input type="date" id="fecha" class="form-control">
+					</div>
+					<div class="form-group" >
+						<button type="submit" class="btn">Enviar Reporte</button>
+					</div>
+					
+				</form>
 			</article>
 			<article id="tab3">
 				<div class="main-content">

@@ -293,5 +293,28 @@ $(document).ready(function () {
 
     // Ejecutar la función
     //fetchData();
-	
+
+	// Función para agregar reporte
+    $('#report-form').submit( function (e) {
+        e.preventDefault();    
+        let finalJSON = {};
+        finalJSON['miembros'] = $('#num-miembros').val();
+        finalJSON['energia'] = $('#usaEnergia').val();
+        finalJSON['municipio'] = $('#municipio').val();
+        finalJSON['lena'] = $('#usalen').val();
+        finalJSON['natural'] = $('#usaGas').val();
+        finalJSON['lp'] = $('#usaLP').val();
+        finalJSON['cantidad'] = $('#gas-amount').val();
+        finalJSON['costo'] = $('#gas-cost').val();
+		finalJSON['fecha'] = $('#fecha').val();
+        console.log(finalJSON);
+
+
+        // Verifica que todos los campos obligatorios estén llenos
+        if (!validarJSON(finalJSON)) {
+            //$('#container').html('Por favor, llena todos los campos requeridos.');
+            //$('#product-result').removeClass('d-none').addClass('d-block');
+            return; // Detiene el envío si faltan datos
+        }
+    });
 });
