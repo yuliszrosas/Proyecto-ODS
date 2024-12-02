@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculadora de ahorro</title>
+    <script src="script.js" defer></script>
+    <script src="municipios.js"></script>
+</head>
+<body>
+    <h1>calculadora de ahorro de gas LP</h1>
+    <form id="calculadoraForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" required>
+            <option value="">Seleccione un estado</option>
+            <option value="Aguascalientes">Aguascalientes</option>
+            <option value="Baja California">Baja California</option>
+            <option value="Baja California Sur">Baja California Sur</option>
+            <option value="Campeche">Campeche</option>
+            <option value="Chiapas">Chiapas</option>
+            <option value="Chihuahua">Chihuahua</option>
+            <option value="Ciudad de México">Ciudad de México</option>
+            <option value="Coahuila">Coahuila</option>
+            <option value="Colima">Colima</option>
+            <option value="Durango">Durango</option>
+            <option value="Estado de México">Estado de México</option>
+            <option value="Guanajuato">Guanajuato</option>
+            <option value="Guerrero">Guerrero</option>
+            <option value="Hidalgo">Hidalgo</option>
+            <option value="Jalisco">Jalisco</option>
+            <option value="Michoacán">Michoacán</option>
+            <option value="Morelos">Morelos</option>
+            <option value="Nayarit">Nayarit</option>
+            <option value="Nuevo León">Nuevo León</option>
+            <option value="Oaxaca">Oaxaca</option>
+            <option value="Puebla">Puebla</option>
+            <option value="Querétaro">Querétaro</option>
+            <option value="Quintana Roo">Quintana Roo</option>
+            <option value="San Luis Potosí">San Luis Potosí</option>
+            <option value="Sinaloa">Sinaloa</option>
+            <option value="Sonora">Sonora</option>
+            <option value="Tabasco">Tabasco</option>
+            <option value="Tamaulipas">Tamaulipas</option>
+            <option value="Tlaxcala">Tlaxcala</option>
+            <option value="Veracruz">Veracruz</option>
+            <option value="Yucatán">Yucatán</option>
+            <option value="Zacatecas">Zacatecas</option>
+        </select><br><br>
+
+        <label for="municipio">Municipio:</label>
+        <select id="municipio" name="municipio" required>
+            <option value="">Seleccione un municipio</option>
+        </select><br><br>
+
+        <label>¿Usa gas LP en su hogar?</label>
+        <select id="usaGas" name="usaGas" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Si">Sí</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <div id="tipoGas" style="display: none;">
+            <label>¿Que tipo de gas usa?</label><br>
+            <input type="radio" id="cilindros20" name="tipoGas" value="cilindros20" required> Cilindro de 20 kilos<br>
+            <input type="radio" id="cilindros30" name="tipoGas" value="cilindros30" required> Cilindro de 30 kilos<br>
+            <input type="radio" id="estacionario" name="tipoGas" value="estacionario" required> Gas estacionario<br><br>
+        </div>
+
+        <div id="cantidadCilindros" style="display: none;">
+            <label>¿Cuantos cilindros utiliza al mes?</label>
+            <input type="number" id="numCilindros" name="numCilindros" min="0"><br><br>
+        </div>
+
+        <div id="litrosEstacionario" style="display: none;">
+            <label>¿Cuantos litros de gas utiliza al mes?</label>
+            <input type="number" id="litrosGas" name="litrosGas" min="0"><br><br>
+        </div>
+
+        <div id="mensajeAhorro" style="display: none;">
+            <p>El uso de energías limpias, como calentadores de agua solar, puede representar un ahorro significativo en dinero y combustible. Además, contribuye a la lucha contra el cambio climático al reducir las emisiones de gases de efecto invernadero.</p>
+        </div>
+
+        <button type="submit" id="calcularAhorro" style="display: none;">Calcular Ahorro</button>
+    </form>
+
+    <h2 id="resultado"></h2>
+</body>
+</html>
