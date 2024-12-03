@@ -355,7 +355,7 @@ th {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     box-sizing: border-box;
     margin: 20px auto; /* Centrado */
 }

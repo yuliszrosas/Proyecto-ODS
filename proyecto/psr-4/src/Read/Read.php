@@ -23,6 +23,30 @@ class Read extends DataBase {
         
         return $data;
     }
+    
+    public function buscarMunicipio($municipio) {
+        // Consulta SQL para obtener los precios del municipio
+        $query = "
+        SELECT precio_por_kilo, precio_por_litro
+        FROM preciogas
+        WHERE municipio = ?
+        LIMIT 1
+        ";
+    
+        // Preparar la consulta para evitar inyecciones SQL
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param('s', $municipio); // Vincular el parámetro
+    
+        $stmt->execute(); // Ejecutar la consulta
+    
+        $result = $stmt->get_result(); // Obtener el resultado
+    
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); // Retornar los precios como un array asociativo
+        } else {
+            return null; // Retornar null si no se encuentra el municipio
+        }
+    }
 
 }
 ?>

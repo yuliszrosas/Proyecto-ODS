@@ -105,78 +105,210 @@
 				
 			</article>
 			<article id="tab2">
-				
-				<form id="report-form" class="google-form">
-					<div class="form-group">
-						<h2 >Reporte de Energías Renovables</h2>
+				<div class="main-content">
+					<div class="cards">
+						<form id="report-form" class="google-form">
+							<div class="form-group">
+								<h2 >Calculadora de ahorro de gas LP</h2>
+							</div>
+							<div class="form-group">
+								<input type="number" id="num-miembros" class="form-control" placeholder="Número de miembros en la familia:" >
+							</div>
+							<div class="form-group">
+								<select id="usaEnergia" name="usaEnergia" class="form-control" >
+									<option value="" >¿Utiliza energías renovables?</option>
+									<option value="si">Sí</option>
+									<option value="no">No</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="estado">Estado:</label>
+								<select id="estado" name="estado" class="form-control">
+									<option value="">Seleccione un estado</option>
+									<option value="Aguascalientes">Aguascalientes</option>
+									<option value="Baja California">Baja California</option>
+									<option value="Baja California Sur">Baja California Sur</option>
+									<option value="Campeche">Campeche</option>
+									<option value="Chiapas">Chiapas</option>
+									<option value="Chihuahua">Chihuahua</option>
+									<option value="Ciudad de México">Ciudad de México</option>
+									<option value="Coahuila">Coahuila</option>
+									<option value="Colima">Colima</option>
+									<option value="Durango">Durango</option>
+									<option value="Estado de México">Estado de México</option>
+									<option value="Guanajuato">Guanajuato</option>
+									<option value="Guerrero">Guerrero</option>
+									<option value="Hidalgo">Hidalgo</option>
+									<option value="Jalisco">Jalisco</option>
+									<option value="Michoacán">Michoacán</option>
+									<option value="Morelos">Morelos</option>
+									<option value="Nayarit">Nayarit</option>
+									<option value="Nuevo León">Nuevo León</option>
+									<option value="Oaxaca">Oaxaca</option>
+									<option value="Puebla">Puebla</option>
+									<option value="Querétaro">Querétaro</option>
+									<option value="Quintana Roo">Quintana Roo</option>
+									<option value="San Luis Potosí">San Luis Potosí</option>
+									<option value="Sinaloa">Sinaloa</option>
+									<option value="Sonora">Sonora</option>
+									<option value="Tabasco">Tabasco</option>
+									<option value="Tamaulipas">Tamaulipas</option>
+									<option value="Tlaxcala">Tlaxcala</option>
+									<option value="Veracruz">Veracruz</option>
+									<option value="Yucatán">Yucatán</option>
+									<option value="Zacatecas">Zacatecas</option>
+								</select>
+							</div>
+					
+							 <!-- Estado: lista desplegable -->
+							 <div class="form-group">
+								<select id="municipio" class="form-control" >
+									<option value="">Seleccione su municipio</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<select id="usalen" class="form-control" >
+									<option value="" >¿Usa leña en su hogar?</option>
+									<option value="si">Sí</option>
+									<option value="no">No</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<select id="usaGas" class="form-control" >
+									<option value="" >¿Usa gas natural en su hogar?</option>
+									<option value="si">Sí</option>
+									<option value="no">No</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<select id="usaLP" class="form-control"  >
+									<option value="" >¿Usa gas LP en su hogar?</option>
+									<option value="si">Sí</option>
+									<option value="no">No</option>
+								</select>
+							</div>
+							<div class="form-group" id="tipoGas" style="display: none;">
+								<div  class="form-control">
+									<label>¿Que tipo de gas usa?</label><br><br>
+									<input type="radio" id="cilindros20" name="tipoGas" value="cilindros20" > Cilindro de 20 kilos<br><br>
+									<input type="radio" id="cilindros30" name="tipoGas" value="cilindros30" > Cilindro de 30 kilos<br><br>
+									<input type="radio" id="estacionario" name="tipoGas" value="estacionario"> Gas estacionario<br><br><br>
+								</div>
+							</div>		
+							<!-- ¿Cuántos cilindros o kilos de gas LP utiliza al mes? -->
+							<div class="form-group" id="cantidadCilindros" style="display: none;">
+								<input type="number"  id="gas-amount" class="form-control" placeholder="Cantidad en cilindros/litros al mes" min="0" >
+							</div>	
+							<!--<div  class="form-group" id="litrosEstacionario" style="display: none;">
+								<input type="number" id="litrosGas" class="form-control" placeholder="Cantidad en litros al mes" name="litrosGas" min="0"><br><br>
+							</div>-->
+							<div class="form-group" id="mensajeAhorro" style="display: none;">
+								<h4>El uso de energías limpias, como calentadores de agua solar, puede representar un ahorro significativo en dinero y combustible. Además, contribuye a la lucha contra el cambio climático al reducir las emisiones de gases de efecto invernadero.</h4>
+							</div>
+							<!-- <div class="form-group" >
+								<input type="number" id="gas-cost" class="form-control" step="0.01" placeholder="Costo promedio mensual de consumo de gas LP ($ MXN)" min="0" >
+							</div>-->
+							<div class="form-group">
+								<div class="form-control">
+									<h4>Fecha del reporte</h4>
+								</div>
+								<div class="form-control">
+									<input type="date" id="fecha" class="form-control">
+								</div>
+							</div>
+							<div class="form-group" id="boton" >
+								<button type="submit" id="boton" class="btn">Enviar Reporte</button>
+							</div>
+							<div class="form-group" id="product-result" >
+								<h4 id="container"></h4 >
+							</div>
+						</form>
+						<div class="google-form">
+							<div class="card-flex">
+								<div class="card-info">
+									<div class="card-head">
+										<!-- Mostrar la sección con los datos enviados -->
+										<div id="submitted-data" >
+											<div class="form-group">
+												<h2>Datos Enviados</h2>
+											</div>
+											<!-- Campos no editables con <label> -->
+											<div class="form-control">
+												<label><strong>Número de miembros en la familia:</strong></label>
+												<p id="label-num-miembros"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>¿Utiliza energías renovables?</strong></label>
+												<p id="label-usaEnergia"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Municipio:</strong></label>
+												<p id="label-municipio"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Tipos de combustible que usa:</strong></label>
+												<p id="label-tipoGas"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Cantidad en cilindros al mes(LP):</strong></label>
+												<p id="label-cantidadCilindros"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Cantidad en litros al mes(LP):</strong></label>
+												<p id="label-litrosGas"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Fecha del reporte:</strong></label>
+												<p id="label-fecha"></p>
+											</div><br>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="google-form">
+							<div class="card-flex">
+								<div class="card-info">
+									<div class="card-head">
+										<!-- Mostrar la sección con los datos enviados -->
+										<div id="submitted-data" >
+											<div class="form-group">
+												<h2>Resultado de ahorro de gas LP</h2>
+											</div>
+											<!-- Campos no editables con <label> -->
+											<div class="form-control">
+												<label><strong>Estado:</strong></label>
+												<p id="label-estado"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Municipio</strong></label>
+												<p id="label-municipioR"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Precio por Kilo:</strong></label>
+												<p id="label-kilo"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Precio por litro:</strong></label>
+												<p id="label-litro"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Gasto promedio mensual:</strong></label>
+												<p id="label-promedio"></p>
+											</div><br>
+											<div class="form-control">
+												<label><strong>Ahorro estimado:</strong></label>
+												<p id="label-ahorro"></p>
+											</div><br>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group">
-						<input type="number" id="num-miembros" class="form-control" placeholder="Número de miembros en la familia:" >
-					</div>
-					<div class="form-group">
-						<select id="usaEnergia" name="usaEnergia" class="form-control" >
-							<option value="" >¿Utiliza energías renovables?</option>
-							<option value="si">Sí</option>
-							<option value="no">No</option>
-						</select>
-					</div>
-			
-					 <!-- Estado: lista desplegable -->
-					 <div class="form-group">
-						<select id="municipio" class="form-control" >
-							<option value="">Seleccione su municipio</option>
-							<option value="Puebla">Puebla</option>
-							<option value="Tehuacán">Tehuacán</option>
-							<option value="Atlixco">Atlixco</option>
-							<option value="San Martín Texmelucan">San Martín Texmelucan</option>
-							<option value="Cholula">Cholula</option>
-							<option value="San Andrés Cholula">San Andrés Cholula</option>
-							<option value="Huejotzingo">Huejotzingo</option>
-							<option value="Amozoc">Amozoc</option>
-							<option value="Tecamachalco">Tecamachalco</option>
-							<option value="Libres">Libres</option>
-							<option value="Zacatlán">Zacatlán</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<select id="usalen" class="form-control" >
-							<option value="" >¿Utilizas leña como fuente de energía en tu hogar?</option>
-							<option value="si">Sí</option>
-							<option value="no">No</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<select id="usaGas" class="form-control" >
-							<option value="" >¿Utilizas gas natural como fuente de energía en tu hogar?</option>
-							<option value="si">Sí</option>
-							<option value="no">No</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<select id="usaLP" class="form-control" >
-							<option value="" >¿Usa gas LP en su hogar?</option>
-							<option value="si">Sí</option>
-							<option value="no">No</option>
-						</select>
-					</div>
-					<!-- ¿Cuántos cilindros o kilos de gas LP utiliza al mes? -->
-					<div class="form-group" >
-						<input type="number" id="gas-amount" class="form-control" placeholder="Cantidad en cilindros/kilos al mes" min="0" >
-					</div>
-					<div class="form-group" >
-						<input type="number" id="gas-cost" class="form-control" step="0.01" placeholder="Costo promedio mensual de consumo de gas LP ($ MXN)" min="0" >
-					</div>
-					<div class="form-group">
-						<label for="fecha">Fecha del Reporte</label>
-						<input type="date" id="fecha" class="form-control">
-					</div>
-					<div class="form-group" >
-						<button type="submit" class="btn">Enviar Reporte</button>
-					</div>
-					<div class="form-group" id="product-result" >
-						<h4 id="container"></h4 >
-					</div>
-				</form>
+				</div>
 			</article>
 			<article id="tab3">
 				<div class="main-content">

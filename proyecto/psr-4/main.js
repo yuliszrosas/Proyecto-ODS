@@ -23,6 +23,44 @@ $(document).ready(function () {
         //{ nombre: "Chiapas", codigo: "07000007" } // Agrega más estados según sea necesario
     ];
 
+    $('#usaLP').change(function () {
+        // Obtén el valor seleccionado
+        const usaLPValue = $(this).val();
+
+        // Verifica si el valor es "si"
+        if (usaLPValue === 'si') {
+            $('#mensajeAhorro').hide();
+            $('#tipoGas').show(); // Muestra el segundo formulario
+            $('#boton').show();
+        } else {
+            // Mostrar el mensaje de ahorro para todos los tipos de gas
+            $('#mensajeAhorro').show();
+            $('#tipoGas').hide(); // Oculta el segundo formulario
+            $('#cantidadCilindros').hide();
+            $('#litrosEstacionario').hide();
+            $('#boton').hide();
+        }
+    });
+
+    // Evento para mostrar/ocultar elementos según el tipo de gas
+    $('input[name="tipoGas"]').change(function () {
+        const selectedGas = $(this).val();
+
+        // Oculta todos los divs relacionados primero
+        $('#cantidadCilindros').hide();
+        $('#litrosEstacionario').hide();
+        $('#mensajeAhorro').hide();
+
+        // Muestra el div correspondiente al tipo de gas seleccionado
+        if (selectedGas === 'cilindros20' || selectedGas === 'cilindros30') {
+            $('#cantidadCilindros').show(); // Mostrar el campo para cilindros
+        } else if (selectedGas === 'estacionario') {
+            $('#cantidadCilindros').show(); // Mostrar el campo para litros
+        }
+
+        
+    });
+
 	// Mostrar la tabla de Calentadores solares al hacer clic en el botón
     $("#verViviendas").click(function () {
 		$("#Titulo").html("<h2>Adopción de energías renovables en viviendas</h2>");
@@ -326,6 +364,7 @@ $(document).ready(function () {
 	// Función para agregar reporte
     $('#report-form').submit( function (e) {
         e.preventDefault();    
+        // Crear el objeto finalJSON con los datos del formulario
         let finalJSON = {};
         finalJSON['miembros'] = $('#num-miembros').val();
         finalJSON['energia'] = $('#usaEnergia').val();
@@ -333,20 +372,94 @@ $(document).ready(function () {
         finalJSON['lena'] = $('#usalen').val();
         finalJSON['gasnatural'] = $('#usaGas').val();
         finalJSON['lp'] = $('#usaLP').val();
-        finalJSON['cantidad'] = $('#gas-amount').val();
-        finalJSON['costo'] = $('#gas-cost').val();
-		finalJSON['fecha'] = $('#fecha').val();
+        finalJSON['cantidad'] = $('#gas-amount').val(); 
+        finalJSON['fecha'] = $('#fecha').val();
+        
         console.log(finalJSON);
 
+        // Validación de campos vacíos
         if (!validarCamposVacios(finalJSON)) {
             $('#container').html('Por favor, llena todos los campos requeridos.');
             $('#product-result').removeClass('d-none').addClass('d-block');
             return; // Detiene el envío si faltan datos
         }
+        // Verificamos el tipo de gas seleccionado y multiplicamos la cantidad por 20 o 30
+        let cantidadCilindros = parseInt(finalJSON['cantidad']); // Obtenemos la cantidad de cilindros
+        let tipoGas = $("input[name='tipoGas']:checked").val(); // Obtenemos el valor del radio seleccionado
 
+        if (tipoGas === 'cilindros20') {
+            finalJSON['cantidad'] = cantidadCilindros * 20; // Multiplicamos por 20
+        } else if (tipoGas === 'cilindros30') {
+            finalJSON['cantidad'] = cantidadCilindros * 30; // Multiplicamos por 30
+        } else if (tipoGas === 'estacionario') {
+            // Si es gas estacionario, podrías querer manejarlo de una forma distinta, por ejemplo:
+            finalJSON['cantidad'] = $('#gas-amount').val(); // O lo que corresponda para gas estacionario
+        }
+
+        let municipio = $('#municipio').val(); // Obtiene el valor del campo de búsqueda
 
         $.ajax({
-            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/procesar-reporte', 
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/searchMunicipio', // Ruta al backend PHP
+            method: 'GET',
+            data: { municipio: municipio },
+            dataType: 'json',
+            success: function (response) {
+                // Verificar si la respuesta es JSON y parsearla si es necesario
+                if (typeof response === 'string') {
+                    response = JSON.parse(response);
+                }
+    
+                console.log(response); // Debugging
+    
+                if (response.precio_por_kilo && response.precio_por_litro) {
+                    finalJSON['kilo'] = response.precio_por_kilo;
+                    finalJSON['litro'] = response.precio_por_litro;
+        
+                    console.log(finalJSON);  // Verifica el contenido de finalJSON
+        
+                    // Enviar el reporte al backend con los precios obtenidos
+                    enviarReporte(finalJSON);
+                } else {
+                    $('#container').html('No se encontraron precios para el municipio indicado.');
+                    $('#product-result').removeClass('d-none').addClass('d-block');
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#container').html('Hubo un error al obtener los precios.');
+                $('#product-result').removeClass('d-none').addClass('d-block');
+                console.error(error);
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        // Ruta al archivo JSON
+        const url = "municipios.json";
+    
+        // Evento al cambiar el estado
+        $("#estado").change(function () {
+            const estadoSeleccionado = $(this).val(); // Obtener el estado seleccionado
+            $("#municipio").empty().append('<option value="">Seleccione su municipio</option>'); // Limpiar municipios
+            
+            if (estadoSeleccionado) {
+                // Obtener municipios desde el archivo JSON
+                $.getJSON(url, function (data) {
+                    const municipios = data[estadoSeleccionado];
+                    if (municipios) {
+                        municipios.forEach(function (municipio) {
+                            $("#municipio").append(new Option(municipio, municipio));
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    // Función para enviar el reporte con los datos finalJSON (incluidos los precios)
+    function enviarReporte(finalJSON) {
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/procesar-reporte',
             type: 'POST',
             data: JSON.stringify(finalJSON),
             success: function (response) {
@@ -360,7 +473,7 @@ $(document).ready(function () {
                     $('#product-result').removeClass('d-none').addClass('d-block');
                     actualizarGrafica();
                 } else {
-                    $('#container').html('Reporte no agregado.'); // Limpiar mensaje de error si no existe
+                    $('#container').html('Reporte no agregado.');
                     $('#product-result').removeClass('d-none').addClass('d-block');
                 }
             },
@@ -369,7 +482,7 @@ $(document).ready(function () {
                 console.error(error);
             }
         });
-    });
+    }
 
     function validarCamposVacios(json) {
         for (let key in json) {

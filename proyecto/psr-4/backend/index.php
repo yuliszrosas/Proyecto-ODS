@@ -44,6 +44,28 @@ $app->get('/contar-combustibles', function ($request, $response, $args) {
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+// Definir la ruta para obtener los datos de los combustibles
+$app->get('/searchMunicipio', function (Request $request, Response $response) {
+    // Obtener el parámetro 'municipio' desde la URL
+    $searchTerm = $request->getQueryParams()['municipio'] ?? '';
+    // Instancia de la clase Read
+    $read = new Read('energia');
+
+    // Llamar al método buscarMunicipio
+    $result = $read->buscarMunicipio($searchTerm);
+
+    if ($result) {
+        $response->getBody()->write(json_encode([
+            'precio_por_kilo' => $result['precio_por_kilo'],
+            'precio_por_litro' => $result['precio_por_litro']
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    } else {
+        $response->getBody()->write(json_encode(['error' => 'Municipio no encontrado']));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+});
+
 $app->get('/hola/{nombre}', function ($request, $response, $args) {
     $response->getBody()->write("Hola, " . $args['nombre']);
     return $response;
