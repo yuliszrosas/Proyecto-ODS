@@ -45,6 +45,15 @@ $app->get('/contar-combustibles', function ($request, $response, $args) {
 });
 
 // Definir la ruta para obtener los datos de los combustibles
+$app->get('/contar-personas', function ($request, $response, $args) {
+    $read = new Read('energia');
+    $data = $read->contarPersona();
+    $response->getBody()->write(json_encode($data));
+    // Establecer el tipo de contenido a 'application/json' para la respuesta
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+// Definir la ruta para obtener los datos de los combustibles
 $app->get('/searchMunicipio', function (Request $request, Response $response) {
     // Obtener el parámetro 'municipio' desde la URL
     $searchTerm = $request->getQueryParams()['municipio'] ?? '';

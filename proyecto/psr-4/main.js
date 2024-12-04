@@ -536,6 +536,58 @@ $(document).ready(function () {
         return true; // Si todos los campos están llenos, retorna verdadero
     }
     function actualizarGrafica() {
+        //Grafica de pastel(num. de personas)
+
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-personas', // Ruta del archivo PHP que obtiene los datos
+            method: 'GET',
+            success: function(data) {
+                console.log(data); // Verifica que los datos sean correctos
+    
+                // Los valores a graficar (personas que respondieron "sí" y "no")
+                const values = [data.contarEnergiaSi, data.contarEnergiaNo];
+                const labels = ['Sí', 'No']; // Las etiquetas de la gráfica
+    
+                // Configuración de la gráfica
+                const ctx = $('#GraficaPastel')[0].getContext('2d'); // Asegúrate de tener un canvas con id="energiaChart"
+                
+                // Verificar si ya existe un gráfico y destruirlo antes de crear uno nuevo
+                if (window.chartInstance) {
+                    window.chartInstance.destroy();
+                }
+                window.chartInstance = new Chart(ctx, {
+                    type: 'pie', // Tipo de gráfico de pastel
+                    data: {
+                        labels: labels, // Etiquetas ("Sí" y "No")
+                        datasets: [{
+                            data: values, // Datos (número de personas que respondieron "Sí" y "No")
+                            backgroundColor: ['#36a2eb', '#ff6384'], // Colores del gráfico
+                            hoverBackgroundColor: ['#2c8cdd', '#f24b6e']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Distribución de Energía en Personas' // Título del gráfico
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        const total = values.reduce((acc, value) => acc + value, 0);
+                                        const percentage = ((tooltipItem.raw / total) * 100).toFixed(2);
+                                        return `${tooltipItem.raw} personas (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    
+        //Grafica comparacion de combustiles
         $.ajax({
             url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-combustibles', // Ruta del archivo PHP que obtiene los datos
             method: 'GET',

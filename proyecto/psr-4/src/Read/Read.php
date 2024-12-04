@@ -23,6 +23,22 @@ class Read extends DataBase {
         
         return $data;
     }
+
+    public function contarPersona() {
+        // Consulta SQL para contar los "sí" y "no" en la columna energia
+        $query = "
+            SELECT 
+                SUM(CASE WHEN energia = 'si' THEN 1 ELSE 0 END) AS contarEnergiaSi,
+                SUM(CASE WHEN energia = 'no' THEN 1 ELSE 0 END) AS contarEnergiaNo
+            FROM reporte
+        ";
+        
+        $result = $this->conexion->query($query);
+        
+        $data = $result->fetch_assoc();
+        
+        return $data;
+    }
     
     public function buscarMunicipio($municipio) {
         // Consulta SQL para obtener los precios del municipio
