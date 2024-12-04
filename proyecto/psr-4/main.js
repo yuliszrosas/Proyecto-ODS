@@ -366,7 +366,6 @@ $(document).ready(function () {
         e.preventDefault();    
         // Crear el objeto finalJSON con los datos del formulario
         let finalJSON = {};
-        finalJSON['miembros'] = $('#num-miembros').val();
         finalJSON['energia'] = $('#usaEnergia').val();
         finalJSON['municipio'] = $('#municipio').val();
         finalJSON['lena'] = $('#usalen').val();
@@ -388,12 +387,14 @@ $(document).ready(function () {
         let tipoGas = $("input[name='tipoGas']:checked").val(); // Obtenemos el valor del radio seleccionado
 
         if (tipoGas === 'cilindros20') {
+            finalJSON['cantidadCilindros'] = $('#gas-amount').val();
             finalJSON['cantidad'] = cantidadCilindros * 20; // Multiplicamos por 20
         } else if (tipoGas === 'cilindros30') {
+            finalJSON['cantidadCilindros'] = $('#gas-amount').val();
             finalJSON['cantidad'] = cantidadCilindros * 30; // Multiplicamos por 30
         } else if (tipoGas === 'estacionario') {
-            // Si es gas estacionario, podrías querer manejarlo de una forma distinta, por ejemplo:
-            finalJSON['cantidad'] = $('#gas-amount').val(); // O lo que corresponda para gas estacionario
+            finalJSON['cantidadLitros'] = $('#gas-amount').val();
+            finalJSON['cantidad'] = $('#gas-amount').val(); 
         }
 
         let municipio = $('#municipio').val(); // Obtiene el valor del campo de búsqueda
@@ -412,8 +413,8 @@ $(document).ready(function () {
                 console.log(response); // Debugging
     
                 if (response.precio_por_kilo && response.precio_por_litro) {
-                    finalJSON['kilo'] = response.precio_por_kilo;
-                    finalJSON['litro'] = response.precio_por_litro;
+                    finalJSON['PrecioKilo'] = response.precio_por_kilo;
+                    finalJSON['precioLitro'] = response.precio_por_litro;
         
                     console.log(finalJSON);  // Verifica el contenido de finalJSON
         
@@ -472,16 +473,58 @@ $(document).ready(function () {
                     $('#container').html('Reporte agregado correctamente.');
                     $('#product-result').removeClass('d-none').addClass('d-block');
                     actualizarGrafica();
+                    mostrarDatosEnviados(finalJSON);
                 } else {
                     $('#container').html('Reporte no agregado.');
                     $('#product-result').removeClass('d-none').addClass('d-block');
                 }
+                $('#tipoGas').hide(); // Oculta el segundo formulario
+                $('#cantidadCilindros').hide();
+                $('#report-form')[0].reset();
             },
             error: function (xhr, status, error) {
                 $('#response-message').text('Hubo un error al enviar el reporte.');
                 console.error(error);
             }
         });
+    }
+
+    // Nueva función para mostrar los datos enviados
+    function mostrarDatosEnviados(data) {
+        $('#label-estado').text($('#estado').val());
+        $('#label-usaEnergia').text(data.energia || 'N/A');
+        $('#label-municipio').text(data.municipio || 'N/A');
+        $('#label-municipioR').text(data.municipio || 'N/A');
+        $('#label-kilo').text(data.PrecioKilo || 'N/A');
+        $('#label-litro').text(data.precioLitro || 'N/A');
+        const combustibles = [];
+        if (data.lena && data.lena.toLowerCase() === "si") combustibles.push("Leña");
+        if (data.lp && data.lp.toLowerCase() === "si") combustibles.push("LP");
+        if (data.gasnatural && data.gasnatural.toLowerCase() === "si") combustibles.push("Gas Natural");
+
+        $('#label-tipoGas').text(combustibles.join(', ') || 'Ninguno');
+        $('#label-cantidadCilindros').text(data.cantidadCilindros || 'N/A');
+        $('#label-litrosGas').text(data.cantidadLitros || 'N/A');
+        $('#label-fecha').text(data.fecha || 'N/A');
+        let promedio = 0; // Inicializar variable para el promedio
+
+        if (data.cantidadLitros > 0) {
+            promedio = data.cantidadLitros * data.precioLitro; // Calcular promedio usando precio por litro
+            $('#label-promedio').text(`$${promedio.toFixed(2)}`); // Mostrar con formato de moneda
+        } else if (data.cantidadCilindros > 0) {
+            promedio = data.cantidad * data.PrecioKilo; // Calcular promedio usando precio por cilindro
+            $('#label-promedio').text(`$${promedio.toFixed(2)}`); // Mostrar con formato de moneda
+        } else {
+            $('#label-promedio').text('Valores no admitidos'); // Mostrar 'N/A' si no se cumple ninguna condición
+        }
+
+        if (!isNaN(promedio)) { // Verificar que el valor sea un número válido
+            let ahorro = promedio * 0.6; // Calcular el 60% del promedio
+            $('#label-ahorro').text(`$${ahorro.toFixed(2)}`); // Asignar el valor con formato de moneda
+        } else {
+            $('#label-ahorro').text('N/A'); // Mostrar "N/A" si el promedio no es válido
+        }
+
     }
 
     function validarCamposVacios(json) {

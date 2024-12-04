@@ -112,11 +112,8 @@
 								<h2 >Calculadora de ahorro de gas LP</h2>
 							</div>
 							<div class="form-group">
-								<input type="number" id="num-miembros" class="form-control" placeholder="Número de miembros en la familia:" >
-							</div>
-							<div class="form-group">
 								<select id="usaEnergia" name="usaEnergia" class="form-control" >
-									<option value="" >¿Utiliza energías renovables?</option>
+									<option value="" >¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</option>
 									<option value="si">Sí</option>
 									<option value="no">No</option>
 								</select>
@@ -201,15 +198,9 @@
 							<div class="form-group" id="cantidadCilindros" style="display: none;">
 								<input type="number"  id="gas-amount" class="form-control" placeholder="Cantidad en cilindros/litros al mes" min="0" >
 							</div>	
-							<!--<div  class="form-group" id="litrosEstacionario" style="display: none;">
-								<input type="number" id="litrosGas" class="form-control" placeholder="Cantidad en litros al mes" name="litrosGas" min="0"><br><br>
-							</div>-->
 							<div class="form-group" id="mensajeAhorro" style="display: none;">
 								<h4>El uso de energías limpias, como calentadores de agua solar, puede representar un ahorro significativo en dinero y combustible. Además, contribuye a la lucha contra el cambio climático al reducir las emisiones de gases de efecto invernadero.</h4>
 							</div>
-							<!-- <div class="form-group" >
-								<input type="number" id="gas-cost" class="form-control" step="0.01" placeholder="Costo promedio mensual de consumo de gas LP ($ MXN)" min="0" >
-							</div>-->
 							<div class="form-group">
 								<div class="form-control">
 									<h4>Fecha del reporte</h4>
@@ -236,11 +227,7 @@
 											</div>
 											<!-- Campos no editables con <label> -->
 											<div class="form-control">
-												<label><strong>Número de miembros en la familia:</strong></label>
-												<p id="label-num-miembros"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>¿Utiliza energías renovables?</strong></label>
+												<label><strong>¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</strong></label>
 												<p id="label-usaEnergia"></p>
 											</div><br>
 											<div class="form-control">
@@ -295,11 +282,11 @@
 												<p id="label-litro"></p>
 											</div><br>
 											<div class="form-control">
-												<label><strong>Gasto promedio mensual:</strong></label>
+												<label><strong>Gasto estimado mensual:</strong></label>
 												<p id="label-promedio"></p>
 											</div><br>
 											<div class="form-control">
-												<label><strong>Ahorro estimado:</strong></label>
+												<label><strong>Ahorro estimado con Calentador Solar:</strong></label>
 												<p id="label-ahorro"></p>
 											</div><br>
 										</div>

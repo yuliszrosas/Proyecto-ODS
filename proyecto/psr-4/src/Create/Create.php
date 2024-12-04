@@ -22,8 +22,8 @@ class Create extends DataBase {
 
         // Preparar la consulta SQL
         $query = "INSERT INTO reporte (
-            miembros, energia, municipio, lena, gasnatural, lp, cantidad, litro, fecha, kilo
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            energia, municipio, lena, gasnatural, lp, cantidad, precioLitro, fecha, PrecioKilo, cantidadCilindros, cantidadLitros
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Preparar la sentencia
         $stmt = $this->conexion->prepare($query);
@@ -38,17 +38,18 @@ class Create extends DataBase {
 
         // Vincular parámetros
         $stmt->bind_param(
-            'isssssidsd', // Tipos: int, string, double, string
-            $data1['miembros'],
+            'sssssidsdid', // Tipos: int, string, double, string
             $data1['energia'],
             $data1['municipio'],
             $data1['lena'],
             $data1['gasnatural'],
             $data1['lp'],
             $data1['cantidad'],
-            $data1['litro'],
+            $data1['precioLitro'],
             $data1['fecha'],
-            $data1['kilo']
+            $data1['PrecioKilo'],//aqi
+            $data1['cantidadCilindros'],
+            $data1['cantidadLitros']
         );
 
         // Ejecutar la consulta
