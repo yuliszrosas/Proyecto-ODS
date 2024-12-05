@@ -17,3 +17,228 @@ INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VAL
 ('Chiapas', 'San Cristóbal de las Casas', 20.15, 10.89),
 ('Jalisco', 'Guadalajara', 19.93, 10.78),
 ('Jalisco', 'Zapopan', 19.93, 10.78);
+
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Ciudad de México', 'Gustavo A. Madero', 20.44, 11.05),
+('Ciudad de México', 'Iztacalco', 20.44, 11.05),
+('Ciudad de México', 'Iztapalapa', 20.44, 11.05),
+('Ciudad de México', 'Magdalena Contreras', 20.44, 11.05),
+('Ciudad de México', 'Miguel Hidalgo', 20.44, 11.05),
+('Ciudad de México', 'Milpa Alta', 20.44, 11.05),
+('Ciudad de México', 'Tláhuac', 20.44, 11.05),
+('Ciudad de México', 'Tlalpan', 20.44, 11.05),
+('Ciudad de México', 'Venustiano Carranza', 20.44, 11.05),
+('Ciudad de México', 'Xochimilco', 20.44, 11.05);
+
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Nayarit', 'Tepic', 20.44, 11.05),
+('Nayarit', 'Xalisco', 20.44, 11.05),
+('Nayarit', 'Bahía de Banderas', 20.44, 11.05),
+('Nayarit', 'Compostela', 20.44, 11.05),
+('Nayarit', 'La Yesca', 20.44, 11.05),
+('Nayarit', 'Ixtlán del Río', 20.44, 11.05),
+('Nayarit', 'Acaponeta', 20.44, 11.05),
+('Nayarit', 'San Blas', 20.44, 11.05),
+('Nayarit', 'Tecuala', 20.44, 11.05),
+('Nayarit', 'Rosamorada', 20.44, 11.05),
+
+('Zacatecas', 'Zacatecas', 20.44, 11.05),
+('Zacatecas', 'Guadalupe', 20.44, 11.05),
+('Zacatecas', 'Fresnillo', 20.44, 11.05),
+('Zacatecas', 'Jerez', 20.44, 11.05),
+('Zacatecas', 'Río Grande', 20.44, 11.05),
+('Zacatecas', 'Sombrerete', 20.44, 11.05),
+('Zacatecas', 'Pinos', 20.44, 11.05),
+('Zacatecas', 'Valparaíso', 20.44, 11.05),
+('Zacatecas', 'Pánfilo Natera', 20.44, 11.05),
+('Zacatecas', 'Cañitas de Felipe Pescador', 20.44, 11.05),
+
+('San Luis Potosí', 'San Luis Potosí', 20.44, 11.05),
+('San Luis Potosí', 'Soledad de Graciano Sánchez', 20.44, 11.05),
+('San Luis Potosí', 'Matehuala', 20.44, 11.05),
+('San Luis Potosí', 'Rioverde', 20.44, 11.05),
+('San Luis Potosí', 'Ciudad Valles', 20.44, 11.05),
+('San Luis Potosí', 'Salinas', 20.44, 11.05),
+('San Luis Potosí', 'Cárdenas', 20.44, 11.05),
+('San Luis Potosí', 'Villa de Reyes', 20.44, 11.05),
+('San Luis Potosí', 'Tancanhuitz', 20.44, 11.05),
+('San Luis Potosí', 'Tanlajás', 20.44, 11.05),
+
+('Tlaxcala', 'Tlaxcala', 20.44, 11.05),
+('Tlaxcala', 'Apizaco', 20.44, 11.05),
+('Tlaxcala', 'Chiautempan', 20.44, 11.05),
+('Tlaxcala', 'Huamantla', 20.44, 11.05),
+('Tlaxcala', 'Tlaxco', 20.44, 11.05),
+('Tlaxcala', 'San Pablo del Monte', 20.44, 11.05),
+('Tlaxcala', 'Santa Ana Chiautempan', 20.44, 11.05),
+('Tlaxcala', 'Ixtacuixtla', 20.44, 11.05),
+('Tlaxcala', 'Totolac', 20.44, 11.05),
+('Tlaxcala', 'Chiautla', 20.44, 11.05),
+
+('Sonora', 'Hermosillo', 20.44, 11.05),
+('Sonora', 'Nogales', 20.44, 11.05),
+('Sonora', 'San Luis Río Colorado', 20.44, 11.05),
+('Sonora', 'Cajeme', 20.44, 11.05),
+('Sonora', 'Agua Prieta', 20.44, 11.05),
+('Sonora', 'Navojoa', 20.44, 11.05),
+('Sonora', 'Guaymas', 20.44, 11.05),
+('Sonora', 'Cananea', 20.44, 11.05),
+('Sonora', 'Empalme', 20.44, 11.05),
+('Sonora', 'Puerto Peñasco', 20.44, 11.05);
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Chihuahua', 'Chihuahua', 22.50, 18.30),
+('Chihuahua', 'Ciudad Juárez', 23.00, 18.70),
+('Chihuahua', 'Delicias', 22.20, 18.10),
+('Chihuahua', 'Cuauhtémoc', 22.40, 18.20),
+('Chihuahua', 'Nuevo Casas Grandes', 22.60, 18.50),
+('Chihuahua', 'Camargo', 22.30, 18.00),
+('Chihuahua', 'Parral', 22.50, 18.40),
+('Chihuahua', 'Ahumada', 22.10, 18.00),
+('Chihuahua', 'Madera', 22.20, 18.10),
+('Chihuahua', 'Saucillo', 22.40, 18.30);
+
+-- Oaxaca
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Oaxaca', 'Oaxaca de Juárez', 24.00, 19.50),
+('Oaxaca', 'Salina Cruz', 23.80, 19.30),
+('Oaxaca', 'Juchitán de Zaragoza', 24.10, 19.60),
+('Oaxaca', 'Tehuantepec', 23.90, 19.40),
+('Oaxaca', 'Tlacolula de Matamoros', 23.70, 19.20),
+('Oaxaca', 'Zimatlán de Álvarez', 23.50, 19.00),
+('Oaxaca', 'Miahuatlán de Porfirio Díaz', 23.40, 18.80),
+('Oaxaca', 'Santa Cruz Xoxocotlán', 23.60, 19.10),
+('Oaxaca', 'Putla Villa de Guerrero', 23.80, 19.30),
+('Oaxaca', 'Ejutla de Crespo', 23.20, 18.70);
+
+-- Sinaloa
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Sinaloa', 'Culiacán Rosales', 21.50, 17.50),
+('Sinaloa', 'Mazatlán', 21.80, 17.80),
+('Sinaloa', 'Los Mochis', 21.70, 17.70),
+('Sinaloa', 'Guasave', 21.60, 17.60),
+('Sinaloa', 'Navolato', 21.50, 17.50),
+('Sinaloa', 'El Fuerte', 21.90, 17.90),
+('Sinaloa', 'Ahome', 21.80, 17.80),
+('Sinaloa', 'Salvador Alvarado', 21.70, 17.70),
+('Sinaloa', 'Angostura', 21.60, 17.60),
+('Sinaloa', 'Choix', 21.40, 17.40);
+
+-- Guerrero
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Guerrero', 'Chilpancingo de los Bravo', 25.00, 20.00),
+('Guerrero', 'Acapulco de Juárez', 24.80, 19.90),
+('Guerrero', 'Iguala de la Independencia', 24.70, 19.80),
+('Guerrero', 'Zihuatanejo de Azueta', 24.60, 19.70),
+('Guerrero', 'Taxco de Alarcón', 24.50, 19.60),
+('Guerrero', 'Coyuca de Benítez', 24.40, 19.50),
+('Guerrero', 'Pungarabato', 24.20, 19.40),
+('Guerrero', 'Técpan de Galeana', 24.30, 19.30),
+('Guerrero', 'Atoyac de Álvarez', 24.10, 19.20),
+('Guerrero', 'Tlapa de Comonfort', 24.00, 19.10);
+
+-- Querétaro
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Querétaro', 'Querétaro', 23.00, 18.50),
+('Querétaro', 'San Juan del Río', 22.80, 18.30),
+('Querétaro', 'El Marqués', 22.70, 18.20),
+('Querétaro', 'Corregidora', 22.60, 18.10),
+('Querétaro', 'Amealco de Bonfil', 22.50, 18.00),
+('Querétaro', 'Pedro Escobedo', 22.40, 17.90),
+('Querétaro', 'Ezequiel Montes', 22.30, 17.80),
+('Querétaro', 'Tequisquiapan', 22.20, 17.70),
+('Querétaro', 'Colón', 22.10, 17.60),
+('Querétaro', 'Tolimán', 22.00, 17.50);
+
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Aguascalientes', 'Aguascalientes', 22.10, 12.00),
+('Aguascalientes', 'Jesús María', 22.15, 12.05),
+('Aguascalientes', 'Calvillo', 22.20, 12.10),
+('Aguascalientes', 'Rincón de Romos', 22.25, 12.15),
+('Aguascalientes', 'Pabellón de Arteaga', 22.30, 12.20),
+('Aguascalientes', 'San Francisco de los Romo', 22.35, 12.25),
+('Aguascalientes', 'El Llano', 22.40, 12.30),
+('Aguascalientes', 'Asientos', 22.45, 12.35),
+('Aguascalientes', 'Tepezalá', 22.50, 12.40),
+('Aguascalientes', 'San José de Gracia', 22.55, 12.45);
+Colima
+sql
+Copiar código
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Colima', 'Colima', 22.00, 11.90),
+('Colima', 'Manzanillo', 22.05, 11.95),
+('Colima', 'Tecomán', 22.10, 12.00),
+('Colima', 'Villa de Álvarez', 22.15, 12.05),
+('Colima', 'Comala', 22.20, 12.10),
+('Colima', 'Coquimatlán', 22.25, 12.15),
+('Colima', 'Armería', 22.30, 12.20),
+('Colima', 'Ixtlahuacán', 22.35, 12.25),
+('Colima', 'Minatitlán', 22.40, 12.30),
+('Colima', 'Cuauhtémoc', 22.45, 12.35);
+Durango
+sql
+Copiar código
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Durango', 'Durango', 21.80, 11.85),
+('Durango', 'Gómez Palacio', 21.85, 11.90),
+('Durango', 'Lerdo', 21.90, 11.95),
+('Durango', 'Canatlán', 21.95, 12.00),
+('Durango', 'Nuevo Ideal', 22.00, 12.05),
+('Durango', 'Santiago Papasquiaro', 22.05, 12.10),
+('Durango', 'Vicente Guerrero', 22.10, 12.15),
+('Durango', 'Cuencamé', 22.15, 12.20),
+('Durango', 'Pueblo Nuevo', 22.20, 12.25),
+('Durango', 'El Oro', 22.25, 12.30);
+Hidalgo
+sql
+Copiar código
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Hidalgo', 'Pachuca de Soto', 21.70, 11.80),
+('Hidalgo', 'Tulancingo de Bravo', 21.75, 11.85),
+('Hidalgo', 'Tizayuca', 21.80, 11.90),
+('Hidalgo', 'Ixmiquilpan', 21.85, 11.95),
+('Hidalgo', 'Tula de Allende', 21.90, 12.00),
+('Hidalgo', 'Actopan', 21.95, 12.05),
+('Hidalgo', 'Tepeji del Río de Ocampo', 22.00, 12.10),
+('Hidalgo', 'Mineral de la Reforma', 22.05, 12.15),
+('Hidalgo', 'Huejutla de Reyes', 22.10, 12.20),
+('Hidalgo', 'Tezontepec de Aldama', 22.15, 12.25);
+Michoacán
+sql
+Copiar código
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Michoacán', 'Morelia', 21.90, 12.00),
+('Michoacán', 'Uruapan', 21.95, 12.05),
+('Michoacán', 'Zamora', 22.00, 12.10),
+('Michoacán', 'Lázaro Cárdenas', 22.05, 12.15),
+('Michoacán', 'Apatzingán', 22.10, 12.20),
+('Michoacán', 'Pátzcuaro', 22.15, 12.25),
+('Michoacán', 'Zitácuaro', 22.20, 12.30),
+('Michoacán', 'La Piedad', 22.25, 12.35),
+('Michoacán', 'Tacámbaro', 22.30, 12.40),
+('Michoacán', 'Hidalgo', 22.35, 12.45);
+Morelos
+sql
+Copiar código
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Morelos', 'Cuernavaca', 21.60, 11.70),
+('Morelos', 'Jiutepec', 21.65, 11.75),
+('Morelos', 'Cuautla', 21.70, 11.80),
+('Morelos', 'Temixco', 21.75, 11.85),
+('Morelos', 'Jojutla', 21.80, 11.90),
+('Morelos', 'Yautepec', 21.85, 11.95),
+('Morelos', 'Zacatepec', 21.90, 12.00),
+('Morelos', 'Tepoztlán', 21.95, 12.05),
+('Morelos', 'Ayala', 22.00, 12.10),
+('Morelos', 'Huitzilac', 22.05, 12.15);
+
+INSERT INTO preciogas (estado, municipio, precio_por_kilo, precio_por_litro) VALUES
+('Estado de México', 'Toluca', 25.50, 24.80),
+('Estado de México', 'Ecatepec de Morelos', 26.00, 25.20),
+('Estado de México', 'Naucalpan de Juárez', 24.70, 23.90),
+('Estado de México', 'Tlalnepantla de Baz', 27.30, 26.50),
+('Estado de México', 'Chimalhuacán', 26.10, 25.30),
+('Estado de México', 'Nezahualcóyotl', 24.90, 24.10),
+('Estado de México', 'Valle de Chalco Solidaridad', 28.00, 27.10),
+('Estado de México', 'Ixtapaluca', 25.80, 24.60),
+('Estado de México', 'Cuautitlán Izcalli', 27.20, 26.40),
+('Estado de México', 'Atizapán de Zaragoza', 25.40, 24.70);
