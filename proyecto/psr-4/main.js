@@ -1,36 +1,83 @@
 $(document).ready(function () {
-
+    // API url
+	const apiUrl = 'https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/6207048676/es/0700/false/BISE/2.0/bc51cc8e-51be-7c4b-2173-50723fcb1168?type=json';
+    //Constantes para la solicitud de API
 	const IdIndicador = "6207019033"; // ID del indicador
     const idioma = "es";
     const datoReciente = "true";
     const fuente = "BISE";
     const version = "2.0";
-    const token = "bc51cc8e-51be-7c4b-2173-50723fcb1168"; // Reemplaza con tu token válido
+    const token = "bc51cc8e-51be-7c4b-2173-50723fcb1168"; 
     const formato = "json";
+
 	// Arrays para los años y los valores
 	const years = [];
 	let values1 = [];
-    const datasets = [];
-    let chartInstance; // Variable global para almacenar la instancia del gráfico
-    let chartInstance1;
-	const apiUrl = 'https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/6207048676/es/0700/false/BISE/2.0/bc51cc8e-51be-7c4b-2173-50723fcb1168?type=json';
+    let labels1 = []; // Aquí se almacenarán los nombres de los estados
+    let values2 = []; // Aquí se almacenarán los valores (porcentaje de cada estado)    
 
-    // Lista de estados con sus códigos geográficos
+
+    // Variable globales para almacenar la instancia del gráfico
+    let chartInstance; 
+    let chartInstance1;
+    let chartInstance2;
+    let chartInstance3;
+
+    // Constantes para graficar imagen en el canvas
+    const canvas = $("#imgReferencia")[0]; 
+    const ctx = canvas.getContext("2d");
+
+    // Creamos una nueva imagen
+    const img = new Image();
+    img.src = "img/calentadores.jpg";
+    const cardFlexContainer = $(".card-info"); 
+    canvas.width = cardFlexContainer.width();  
+    canvas.height = cardFlexContainer.height(); 
+    $(img).on("load", function () {    // Dibujamos la imagen en el canvas cuando esté completamente cargada
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Ajustar al tamaño del canvas
+    });
+
+    //Constantes para los estados
     const estados = [
         { nombre: "Puebla", codigo: "07000002" },
-        { nombre: "Jalisco", codigo: "07000014" }
-        //{ nombre: "Nuevo León", codigo: "07000019" },
-        //{ nombre: "Chiapas", codigo: "07000007" } // Agrega más estados según sea necesario
+        { nombre: "Jalisco", codigo: "07000014" },
+        { nombre: "Nuevo León", codigo: "07000019" },
+        { nombre: "Coahuila", codigo: "07000005" }, 
+        { nombre: "Aguascalintes", codigo: "07000001" },
+        { nombre: "Baja California", codigo: "07000002" },
+        { nombre: "Baja California Sur", codigo: "07000003" },
+        { nombre: "Campeche", codigo: "07000004" },
+        { nombre: "Chiapas", codigo: "07000007" },
+        { nombre: "Chihuahua", codigo: "07000008" },
+        { nombre: "Colima", codigo: "07000006" },
+        { nombre: "Guanajuato", codigo: "07000011" },
+        { nombre: "Ciudad de Mexico", codigo: "07000009" },
+        { nombre: "Durango", codigo: "07000010" },
+        { nombre: "Guerrero", codigo: "07000012" },
+        { nombre: "Hidalgo", codigo: "07000013" },
+        { nombre: "Michoacán", codigo: "07000016" },
+        { nombre: "Morelos", codigo: "07000017" },
+        { nombre: "Edo. Mex", codigo: "07000015" },
+        { nombre: "Nayarit", codigo: "07000018" },
+        { nombre: "Oaxaca", codigo: "07000020" },
+        { nombre: "Querétaro", codigo: "07000022" },
+        { nombre: "Quintana Roo", codigo: "07000023" },
+        { nombre: "San Luis Potosí", codigo: "07000024" },
+        { nombre: "Sinaloa", codigo: "07000025" },
+        { nombre: "Sonora", codigo: "07000026" },
+        { nombre: "Tabasco", codigo: "07000027" },
+        { nombre: "Tamaulipas", codigo: "07000028" },
+        { nombre: "Tlaxcala", codigo: "07000029" },
+        { nombre: "Yucatán", codigo: "07000031" },
+        { nombre: "Veracruz", codigo: "07000030" }
     ];
 
+    // Comportamiento para la pregunta ¿Usa gas LP en su hogar?
     $('#usaLP').change(function () {
-        // Obtén el valor seleccionado
         const usaLPValue = $(this).val();
-
-        // Verifica si el valor es "si"
         if (usaLPValue === 'si') {
             $('#mensajeAhorro').hide();
-            $('#tipoGas').show(); // Muestra el segundo formulario
+            $('#tipoGas').show(); 
             $('#boton').show();
         } else {
             // Mostrar el mensaje de ahorro para todos los tipos de gas
@@ -42,26 +89,22 @@ $(document).ready(function () {
         }
     });
 
-    // Evento para mostrar/ocultar elementos según el tipo de gas
+    // Evento para mostrar/ocultar elementos según el tipo de gas pregunta ¿Cuántos cilindros o kilos de gas LP utiliza al mes? 
     $('input[name="tipoGas"]').change(function () {
         const selectedGas = $(this).val();
-
         // Oculta todos los divs relacionados primero
         $('#cantidadCilindros').hide();
         $('#litrosEstacionario').hide();
         $('#mensajeAhorro').hide();
-
         // Muestra el div correspondiente al tipo de gas seleccionado
         if (selectedGas === 'cilindros20' || selectedGas === 'cilindros30') {
-            $('#cantidadCilindros').show(); // Mostrar el campo para cilindros
+            $('#cantidadCilindros').show();
         } else if (selectedGas === 'estacionario') {
-            $('#cantidadCilindros').show(); // Mostrar el campo para litros
+            $('#cantidadCilindros').show(); 
         }
-
-        
     });
 
-	// Mostrar la tabla de Calentadores solares al hacer clic en el botón
+	// Mostrar la tabla de Calentadores solares en las viviendas al hacer clic en el botón
     $("#verViviendas").click(function () {
 		$("#Titulo").html("<h2>Adopción de energías renovables en viviendas</h2>");
 		$("#descripcion").html(`
@@ -69,10 +112,12 @@ $(document).ready(function () {
 				En el gráfico y la tabla se presentará el porcentaje de viviendas que cuentan con calentadores solares de agua en cada estado. El eje horizontal (X) representará los estados, mientras que el eje vertical (Y) mostrará el porcentaje de viviendas con esta tecnología. Cada barra o punto en el gráfico reflejará el porcentaje específico para cada estado, permitiendo comparar visualmente la adopción de calentadores solares entre las diferentes regiones del país.
 			</small>
 		`);
+        $("#datosCombustibles").hide();
 		$("#datosSolar").show();
 		$("#datosGasto").hide();
         $("#tabla").toggle();
     });
+
 	// Mostrar la tabla de Gastos al hacer clic en el botón
 	$("#verMas").click(function () {
 		$("#Titulo").html("<h2>Gasto promedio trimestral en vivienda y combustibles</h2>");
@@ -81,8 +126,24 @@ $(document).ready(function () {
 				El gráfico y la tabla mostrarían la evolución del gasto promedio trimestral que realizan los hogares en conceptos de vivienda y combustibles, expresado en pesos. El eje horizontal (X) representaría los trimestres o años, mientras que el eje vertical (Y) mostraría el gasto promedio en pesos. Cada punto o barra en el gráfico reflejaría el gasto estimado por trimestre en función de los datos recolectados. Esto permitiría visualizar cómo ha cambiado este gasto a lo largo del tiempo, facilitando la comparación de las tendencias en diferentes periodos.
 			</small>
 		`);
-		$("#datosSolar").hide();
+		$("#datosCombustibles").hide();
+        $("#datosSolar").hide();
 		$("#datosGasto").show();
+        
+        $("#tabla").toggle();
+    });
+
+    // Mostrar la tabla de Gastos al hacer clic en el botón
+	$("#verCombustibles").click(function () {
+		$("#Titulo").html("<h2>Dependencia de combustibles fósiles en viviendas</h2>");
+		$("#descripcion").html(`
+			<small>
+				Esta gráfica de radar muestra la distribución del consumo de diferentes tipos de combustibles (Gas LP, Leña y Gas Natural) en los 5 estados con mayor uso de estos recursos. Los datos reflejan el número de personas que utilizan cada combustible, obtenidos a partir de una encuesta realizada a los hogares de estos estados. La visualización permite comparar de manera clara las preferencias de consumo energético entre los distintos combustibles.
+            </small>
+		`);
+        $("#datosCombustibles").show();
+		$("#datosSolar").hide();
+		$("#datosGasto").hide();
         $("#tabla").toggle();
     });
 
@@ -90,7 +151,6 @@ $(document).ready(function () {
     $('ul.tabs li a:first').addClass('active');
     $('.secciones article').hide();
     $('.secciones article:first').show();
-
     $('ul.tabs li a').click(function (e) {
         e.preventDefault();
         $('ul.tabs li a').removeClass('active');
@@ -101,7 +161,6 @@ $(document).ready(function () {
         $(activeTab).show();
     });
 	
-
     // Función para construir la URL de la API
     function construirUrl(codigoEstado) {
         return `https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/${IdIndicador}/${idioma}/${codigoEstado}/${datoReciente}/${fuente}/${version}/${token}?type=${formato}`;
@@ -110,7 +169,7 @@ $(document).ready(function () {
     // Obtener los datos de cada estado y generar la gráfica
     async function fetchData() {
         const tableBody = $("#dataTable");
-
+        
         for (const estado of estados) {
             try {
                 const url = construirUrl(estado.codigo);
@@ -119,115 +178,77 @@ $(document).ready(function () {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                // Extraer datos de las observaciones
+                 // Extraer el valor más reciente (última observación)
                 const observations = data.Series[0].OBSERVATIONS;
-                const years = [];
-                const values = [];
+                const latestObservation = observations[observations.length - 1]; // Última observación
+                const value = parseFloat(latestObservation.OBS_VALUE);
 
-                observations.forEach(item => {
-                    years.push(item.TIME_PERIOD);
-                    values.push(parseFloat(item.OBS_VALUE));
+                    // Agregar estado y valor a las listas
+                labels1.push(estado.nombre); // Nombres de los estados
+                values2.push(value); // Valores asociados
 
-                    // Agregar fila a la tabla
-                    const row = `<tr>
-                                    <td>${estado.nombre}</td>
-                                    <td>${item.TIME_PERIOD}</td>
-                                    <td>${parseFloat(item.OBS_VALUE).toFixed(2)}</td>
-                                  </tr>`;
-                    tableBody.append(row);
-                });
-
-                // Crear un dataset para este estado
-                datasets.push({
-                    label: estado.nombre,
-                    data: values,
-                    backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`,
-                    borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
-                    borderWidth: 1
-                });
+                // Agregar fila a la tabla
+                const row = `<tr>
+                                <td>${estado.nombre}</td>
+                                <td>${latestObservation.TIME_PERIOD}</td>
+                                <td>${value.toFixed(2)}</td>
+                            </tr>`;
+                tableBody.append(row);
             } catch (error) {
                 console.error(`Error al obtener los datos para ${estado.nombre}:`, error);
             }
-        }
-
-        // Crear la gráfica con los datos obtenidos
+        }// Crear la gráfica con los datos obtenidos
         const ctx = $("#solarChart")[0].getContext("2d");
         new Chart(ctx, {
             type: "bar",
             data: {
-                labels: estados.map(e => e.nombre), // Mostrar nombres de estados como etiquetas
-                datasets: datasets
+                labels: labels1, // Etiquetas del eje X (nombres de los estados)
+                datasets: [
+                    {
+                        label: "Porcentaje de viviendas con calentadores solares",
+                        data: values2, // Valores del eje Y (porcentaje de cada estado)
+                        backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, // Color de las barras
+                        borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, // Color del borde
+                        borderWidth: 1,
+                    },
+                ],
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        display: false,
-                        position: "top",
+                    title: {
+                        display: true,
+                        text: "Porcentaje de viviendas con calentadores solares de agua por estado",
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                            },
+                        },
                     },
                 },
                 scales: {
+                    x: {
+                        display: false,
+                        title: {
+                            display: true,
+                            text: "Estados",
+                        },
+                    },
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: "Porcentaje"
-                        }
+                            text: "Porcentaje",
+                        },
                     },
-                    x: {
-                        title: {
-                            display: true,
-                            text: "Estados"
-                        }
-                    }
-                }
-            }
+                },
+            },
         });
     }
 
-    // Evento de clic al gráfico para abrir el modal
-    $('#solarChart').click(function () {
-        $('#myModal').show();
-        // Redibujar la gráfica en el modal
-        var ctx = $('#modalChart')[0].getContext("2d"); // Obtener el contexto del canvas
-        // Verificar si ya existe un gráfico en el canvas y destruirlo
-        if (chartInstance) {
-            chartInstance.destroy();
-        }
-        chartInstance = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: estados.map(e => e.nombre), // Mostrar nombres de estados como etiquetas
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                        position: "top",
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: "Porcentaje"
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: "Estados"
-                        }
-                    }
-                }
-            }
-        });
-    }); 
 	
-
     // Cerrar el modal cuando se haga clic en la "X"
     $('.close').click(function () {
         $('#myModal').hide();
@@ -240,61 +261,8 @@ $(document).ready(function () {
         }
     });
 
-	// Evento de clic al gráfico para abrir el modal
-	$('#GraficaViviendas').click(function () {
-		// Mostrar el modal
-        // Verificar si ya existe un gráfico en el canvas
-        $('#myModal').show();
-
-        const ctx = $('#modalChart')[0].getContext('2d');
-        if (chartInstance) {
-            chartInstance.destroy();
-        }
-        chartInstance = new Chart(ctx, {
-            type: 'line', // Tipo de gráfica
-            data: {
-                labels: years, 
-                datasets: [{
-                    data: values1, // Datos de los valores observados
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true, // Activa el título
-                        text: 'Gasto total promedio por hogar en vivienda y combustibles' // Título de la gráfica
-                    },
-                    legend: {
-                        display: false,
-                        position: 'top', // Leyenda en la parte superior
-                    }
-                },
-                scales: {
-					x: { // Configuración del eje X
-						title: {
-							display: true, 
-							text: 'Años' 
-						}
-					},
-					y: { // Configuración del eje Y
-						title: {
-							display: true, 
-							text: 'Gasto en Pesos' 
-						},
-						beginAtZero: true 
-					}
-				}
-            }
-        });
-
-	}); 
-	
-
-    // Realizar una solicitud AJAX a la API usando jQuery
+		
+    // Realizar una solicitud AJAX a la API usando jQuery y graficar la grafica de Gasto promedio trimestral en vivienda y combustibles 
     $.getJSON(apiUrl, function(data) {
         // Datos de la respuesta
         const series = data.Series[0].OBSERVATIONS;
@@ -304,6 +272,7 @@ $(document).ready(function () {
             years.push(item.TIME_PERIOD);
             values.push(parseFloat(item.OBS_VALUE));
         });
+        
         values1 = values;
         // Crear la gráfica utilizando Chart.js
         const ctx = $('#GraficaViviendas')[0].getContext('2d');
@@ -313,8 +282,8 @@ $(document).ready(function () {
                 labels: years, // Etiquetas (años)
                 datasets: [{
                     data: values, // Datos de los valores observados
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
+                    borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                    borderWidth: 3,
                     fill: false
                 }]
             },
@@ -358,24 +327,21 @@ $(document).ready(function () {
         });
     });
 
-    // Ejecutar la función
-    //fetchData();
-    actualizarGrafica();
+    
 	// Función para agregar reporte
     $('#report-form').submit( function (e) {
         e.preventDefault();    
         // Crear el objeto finalJSON con los datos del formulario
         let finalJSON = {};
         finalJSON['energia'] = $('#usaEnergia').val();
+        finalJSON['estado'] = $('#estado').val();
         finalJSON['municipio'] = $('#municipio').val();
         finalJSON['lena'] = $('#usalen').val();
         finalJSON['gasnatural'] = $('#usaGas').val();
         finalJSON['lp'] = $('#usaLP').val();
         finalJSON['cantidad'] = $('#gas-amount').val(); 
         finalJSON['fecha'] = $('#fecha').val();
-        
         console.log(finalJSON);
-
         // Validación de campos vacíos
         if (!validarCamposVacios(finalJSON)) {
             $('#container').html('Por favor, llena todos los campos requeridos.');
@@ -400,7 +366,7 @@ $(document).ready(function () {
         let municipio = $('#municipio').val(); // Obtiene el valor del campo de búsqueda
 
         $.ajax({
-            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/searchMunicipio', // Ruta al backend PHP
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/searchMunicipio', 
             method: 'GET',
             data: { municipio: municipio },
             dataType: 'json',
@@ -409,16 +375,11 @@ $(document).ready(function () {
                 if (typeof response === 'string') {
                     response = JSON.parse(response);
                 }
-    
                 console.log(response); // Debugging
-    
                 if (response.precio_por_kilo && response.precio_por_litro) {
                     finalJSON['PrecioKilo'] = response.precio_por_kilo;
                     finalJSON['precioLitro'] = response.precio_por_litro;
-        
                     console.log(finalJSON);  // Verifica el contenido de finalJSON
-        
-                    // Enviar el reporte al backend con los precios obtenidos
                     enviarReporte(finalJSON);
                 } else {
                     $('#container').html('No se encontraron precios para el municipio indicado.');
@@ -433,16 +394,13 @@ $(document).ready(function () {
         });
     });
 
-
+    //Funcion para cargar los municipios y agregarlos al formulario dependiendo del  estado seleccionado
     $(document).ready(function () {
         // Ruta al archivo JSON
         const url = "municipios.json";
-    
-        // Evento al cambiar el estado
         $("#estado").change(function () {
             const estadoSeleccionado = $(this).val(); // Obtener el estado seleccionado
             $("#municipio").empty().append('<option value="">Seleccione su municipio</option>'); // Limpiar municipios
-            
             if (estadoSeleccionado) {
                 // Obtener municipios desde el archivo JSON
                 $.getJSON(url, function (data) {
@@ -468,7 +426,6 @@ $(document).ready(function () {
                     response = JSON.parse(response); // Convierte la cadena JSON en un objeto
                 }
                 console.log(response);
-
                 if (response.success) {
                     $('#container').html('Reporte agregado correctamente.');
                     $('#product-result').removeClass('d-none').addClass('d-block');
@@ -517,7 +474,6 @@ $(document).ready(function () {
         } else {
             $('#label-promedio').text('Valores no admitidos'); // Mostrar 'N/A' si no se cumple ninguna condición
         }
-
         if (!isNaN(promedio)) { // Verificar que el valor sea un número válido
             let ahorro = promedio * 0.6; // Calcular el 60% del promedio
             $('#label-ahorro').text(`$${ahorro.toFixed(2)}`); // Asignar el valor con formato de moneda
@@ -527,6 +483,7 @@ $(document).ready(function () {
 
     }
 
+    //Funcion para validar que los cambios no esten vacios
     function validarCamposVacios(json) {
         for (let key in json) {
             if ((!json[key] || json[key].trim() === '')) {
@@ -535,34 +492,95 @@ $(document).ready(function () {
         }
         return true; // Si todos los campos están llenos, retorna verdadero
     }
-    function actualizarGrafica() {
-        //Grafica de pastel(num. de personas)
 
+    //Graficar al inicio y cuando se agrega un nuevo reporte
+    function actualizarGrafica() {
+        
         $.ajax({
-            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-personas', // Ruta del archivo PHP que obtiene los datos
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-estados', // Ruta del archivo PHP que obtiene los datos
             method: 'GET',
             success: function(data) {
-                console.log(data); // Verifica que los datos sean correctos
-    
-                // Los valores a graficar (personas que respondieron "sí" y "no")
-                const values = [data.contarEnergiaSi, data.contarEnergiaNo];
-                const labels = ['Sí', 'No']; // Las etiquetas de la gráfica
-    
-                // Configuración de la gráfica
-                const ctx = $('#GraficaPastel')[0].getContext('2d'); // Asegúrate de tener un canvas con id="energiaChart"
+                console.log(data); 
                 
-                // Verificar si ya existe un gráfico y destruirlo antes de crear uno nuevo
-                if (window.chartInstance) {
-                    window.chartInstance.destroy();
+                // Datos para la gráfica de radar
+                const labels = data.map(item => item.estado); // Obtener los nombres de los estados
+                const valuesLP = data.map(item => item.contarLP); // Contar "Sí" para Gas LP
+                const valuesLena = data.map(item => item.contarLena); // Contar "Sí" para Leña
+                const valuesGasNatural = data.map(item => item.contarGasNatural); // Contar "Sí" para Gas Natural
+    
+                const ctx = $('#GraficaRadar')[0].getContext('2d'); // Asegúrate de tener un canvas con id="modalChart"
+                
+                if (chartInstance2) {
+                    chartInstance2.destroy();
                 }
-                window.chartInstance = new Chart(ctx, {
-                    type: 'pie', // Tipo de gráfico de pastel
+                chartInstance2 = new Chart(ctx, {
+                    type: 'radar', // Tipo de gráfico de radar
+                    data: {
+                        labels: labels, // Nombres de los estados
+                        datasets: [
+                            {
+                                label: 'Gas LP',
+                                data: valuesLP, // Datos de Gas LP
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Color de fondo
+                                borderColor: 'rgba(255, 99, 132, 1)', // Color de borde
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Leña',
+                                data: valuesLena, // Datos de Leña
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+                                borderColor: 'rgba(54, 162, 235, 1)', // Color de borde
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Gas Natural',
+                                data: valuesGasNatural, // Datos de Gas Natural
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo
+                                borderColor: 'rgba(75, 192, 192, 1)', // Color de borde
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scale: {
+                            ticks: {
+                                beginAtZero: true, // Asegura que las etiquetas de la escala comiencen desde 0
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Consumo de Energía por Estado' // Título de la gráfica
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-personas', 
+            method: 'GET',
+            success: function(data) {
+                console.log(data); 
+                const values = [parseInt(data.contarEnergiaSi), parseInt(data.contarEnergiaNo)];
+                console.log(values); 
+                const labels = ['Sí', 'No']; 
+                const ctx = $('#GraficaPastel')[0].getContext('2d'); // Asegúrate de tener un canvas con id="energiaChart"
+                if (chartInstance3) {
+                    chartInstance3.destroy();
+                }
+                chartInstance3 = new Chart(ctx, {
+                    type: 'doughnut', // Tipo de gráfico de pastel
                     data: {
                         labels: labels, // Etiquetas ("Sí" y "No")
                         datasets: [{
                             data: values, // Datos (número de personas que respondieron "Sí" y "No")
-                            backgroundColor: ['#36a2eb', '#ff6384'], // Colores del gráfico
-                            hoverBackgroundColor: ['#2c8cdd', '#f24b6e']
+                            backgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`], // Colores del gráfico
+                            hoverBackgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`],
+                            borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                            borderWidth: 3
                         }]
                     },
                     options: {
@@ -570,12 +588,13 @@ $(document).ready(function () {
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Distribución de Energía en Personas' // Título del gráfico
+                                text: 'Preferencias sobre el Uso de Energías Renovables' // Título del gráfico
                             },
                             tooltip: {
                                 callbacks: {
                                     label: function(tooltipItem) {
                                         const total = values.reduce((acc, value) => acc + value, 0);
+                                        console.log(total);
                                         const percentage = ((tooltipItem.raw / total) * 100).toFixed(2);
                                         return `${tooltipItem.raw} personas (${percentage}%)`;
                                     }
@@ -594,7 +613,7 @@ $(document).ready(function () {
             success: function(data) {
                 console.log(data);
                 const labels = ['Leña', 'Gas Natural', 'Gas LP']; // Las etiquetas de la gráfica
-                const values = [data.contarLena, data.contarGasNatural, data.contarLP]; // Los valores a graficar
+                const values = [parseInt(data.contarLena), parseInt(data.contarGasNatural),parseInt(data.contarLP)]; // Los valores a graficar
                 const ctx = $('#combustibleChart')[0].getContext('2d');
                 if (chartInstance1) {
                     chartInstance1.destroy();
@@ -651,24 +670,156 @@ $(document).ready(function () {
                         }
                     }
                 });
-            },
-            error: function() {
-                alert('Error al obtener los datos.');
+                // Agregar datos a la tabla
+                const tableBody = $('#dataTable2'); // Referencia al cuerpo de la tabla
+                tableBody.empty(); // Limpiar la tabla antes de agregar los nuevos datos
+
+                // Recorrer los datos y agregar las filas en la tabla
+                const dataRows = [
+                    { type: 'Leña', count: data.contarLena },
+                    { type: 'Gas Natural', count: data.contarGasNatural },
+                    { type: 'Gas LP', count: data.contarLP }
+                ];
+
+                dataRows.forEach(row => {
+                    const tableRow = `<tr>
+                        <td>${row.type}</td>
+                        <td>${row.count}</td>
+                    </tr>`;
+                    tableBody.append(tableRow); // Agregar la fila a la tabla
+                });
             }
         });
     }
 
-    // Evento de clic al gráfico para abrir el modal
+    // Evento de clic al gráfico para abrir el modal y graficar el consumo de combstibles por estado
+    $('#GraficaRadar').click(function () {
+        $('#myModal').show();
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-estados', // Ruta del archivo PHP que obtiene los datos
+            method: 'GET',
+            success: function(data) {
+                console.log(data); 
+                
+                // Datos para la gráfica de radar
+                const labels = data.map(item => item.estado); // Obtener los nombres de los estados
+                const valuesLP = data.map(item => item.contarLP); // Contar "Sí" para Gas LP
+                const valuesLena = data.map(item => item.contarLena); // Contar "Sí" para Leña
+                const valuesGasNatural = data.map(item => item.contarGasNatural); // Contar "Sí" para Gas Natural
+    
+                const ctx = $('#modalChart')[0].getContext('2d'); // Asegúrate de tener un canvas con id="modalChart"
+                
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                chartInstance = new Chart(ctx, {
+                    type: 'radar', // Tipo de gráfico de radar
+                    data: {
+                        labels: labels, // Nombres de los estados
+                        datasets: [
+                            {
+                                label: 'Gas LP',
+                                data: valuesLP, // Datos de Gas LP
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Color de fondo
+                                borderColor: 'rgba(255, 99, 132, 1)', // Color de borde
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Leña',
+                                data: valuesLena, // Datos de Leña
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+                                borderColor: 'rgba(54, 162, 235, 1)', // Color de borde
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Gas Natural',
+                                data: valuesGasNatural, // Datos de Gas Natural
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo
+                                borderColor: 'rgba(75, 192, 192, 1)', // Color de borde
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scale: {
+                            ticks: {
+                                beginAtZero: true, // Asegura que las etiquetas de la escala comiencen desde 0
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Consumo de Energía por Estado' // Título de la gráfica
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
+    
+    // Evento de clic al gráfico para abrir el modal y graficar La distribucion de Preferencias sobre el Uso de Energías Renovables
+	$('#GraficaPastel').click(function () {
+        $('#myModal').show();
+        $.ajax({
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-personas',
+            method: 'GET',
+            success: function(data) {
+                console.log(data); 
+                const values = [parseInt(data.contarEnergiaSi), parseInt(data.contarEnergiaNo)];
+                const labels = ['Sí', 'No']; // Las etiquetas de la gráfica
+                const ctx = $('#modalChart')[0].getContext('2d'); 
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                chartInstance = new Chart(ctx, {
+                    type: 'doughnut', // Tipo de gráfico de pastel
+                    data: {
+                        labels: labels, // Etiquetas ("Sí" y "No")
+                        datasets: [{
+                            data: values, // Datos (número de personas que respondieron "Sí" y "No")
+                            backgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`], // Colores del gráfico
+                            hoverBackgroundColor: [`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`],
+                            borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Preferencias sobre el Uso de Energías Renovables' // Título del gráfico
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        const total = values.reduce((acc, value) => acc + value, 0);
+                                        const percentage = ((tooltipItem.raw / total) * 100).toFixed(2);
+                                        return `${tooltipItem.raw} personas (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+	}); 
+
+    
+    // Evento de clic al gráfico para abrir el modal y graficar La dependencia e combustibles
 	$('#combustibleChart').click(function () {
 
         $('#myModal').show();
         $.ajax({
-            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-combustibles', // Ruta del archivo PHP que obtiene los datos
+            url: 'http://localhost/Proyecto-ODS/proyecto/psr-4/backend/contar-combustibles', 
             method: 'GET',
             success: function(data) {
                 console.log(data);
                 const labels = ['Leña', 'Gas Natural', 'Gas LP']; // Las etiquetas de la gráfica
-                const values = [data.contarLena, data.contarGasNatural, data.contarLP]; // Los valores a graficar
+                const values = [parseInt(data.contarLena), parseInt(data.contarGasNatural),parseInt(data.contarLP)]; // Los valores a graficar
                 const ctx = $('#modalChart')[0].getContext('2d');
                 if (chartInstance) {
                     chartInstance.destroy();
@@ -722,6 +873,7 @@ $(document).ready(function () {
                                     text: 'Num. Personas' // Título del eje Y
                                 }
                             }
+                            
                         }
                     }
                 });
@@ -733,4 +885,115 @@ $(document).ready(function () {
 
 	}); 
 
+    // Evento de clic al gráfico para abrir el modal y graficar la grafica de Gasto promedio trimestral en vivienda y combustibles 
+	$('#GraficaViviendas').click(function () {
+        
+        $('#myModal').show();
+        // Verificar si ya existe un gráfico en el canvas
+        const ctx = $('#modalChart')[0].getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
+            type: 'line', // Tipo de gráfica
+            data: {
+                labels: years, 
+                datasets: [{
+                    data: values1, // Datos de los valores observados
+                    borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                    borderWidth: 3,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true, // Activa el título
+                        text: 'Gasto total promedio por hogar en vivienda y combustibles' // Título de la gráfica
+                    },
+                    legend: {
+                        display: false,
+                        position: 'top', // Leyenda en la parte superior
+                    }
+                },
+                scales: {
+					x: { // Configuración del eje X
+						title: {
+							display: true, 
+							text: 'Años' 
+						}
+					},
+					y: { // Configuración del eje Y
+						title: {
+							display: true, 
+							text: 'Gasto en Pesos' 
+						},
+						beginAtZero: true 
+					}
+				}
+            }
+        });
+
+	}); 
+
+    // Evento de clic al gráfico para abrir el modal y graficar la grafica de calentadores solares
+    $('#solarChart').click(function () {
+        $('#myModal').show();
+        // Redibujar la gráfica en el modal
+        var ctx = $('#modalChart')[0].getContext("2d"); // Obtener el contexto del canvas
+        // Verificar si ya existe un gráfico en el canvas y destruirlo
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels1, // Etiquetas del eje X (nombres de los estados)
+                datasets: [
+                    {
+                        label: "Porcentaje de viviendas con calentadores solares",
+                        data: values2, // Valores del eje Y (porcentaje de cada estado)
+                        backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`, // Color de las barras
+                        borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, // Color del borde
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Porcentaje de viviendas con calentadores solares de agua por estado",
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                            },
+                        },
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Estados",
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Porcentaje",
+                        },
+                    },
+                },
+            },
+        });
+    }); 
+
+    fetchData();
+    actualizarGrafica();
 });

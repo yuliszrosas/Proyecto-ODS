@@ -23,8 +23,7 @@ $app->post('/procesar-reporte', function (Request $request, Response $response, 
         $formulario = new Create('energia');
         $formulario->add($reporte); // Agregar el producto
         $responseData = $formulario->getData();
-        $response->getBody()->write(json_encode($responseData)); // Escribe el cuerpo de la respuesta con los datos en formato JSON
-
+        $response->getBody()->write(json_encode($responseData)); 
         return $response->withHeader('Content-Type', 'application/json'); 
     } catch (Exception $e) {
         $errorData = [
@@ -39,8 +38,6 @@ $app->get('/contar-combustibles', function ($request, $response, $args) {
     $read = new Read('energia');
     $data = $read->contarCombustibles();
     $response->getBody()->write(json_encode($data));
-
-    // Establecer el tipo de contenido a 'application/json' para la respuesta
     return $response->withHeader('Content-Type', 'application/json');
 });
 
@@ -49,7 +46,14 @@ $app->get('/contar-personas', function ($request, $response, $args) {
     $read = new Read('energia');
     $data = $read->contarPersona();
     $response->getBody()->write(json_encode($data));
-    // Establecer el tipo de contenido a 'application/json' para la respuesta
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+// Definir la ruta para obtener los datos de los combustibles
+$app->get('/contar-estados', function ($request, $response, $args) {
+    $read = new Read('energia');
+    $data = $read->contarEstado();
+    $response->getBody()->write(json_encode($data));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
@@ -57,6 +61,7 @@ $app->get('/contar-personas', function ($request, $response, $args) {
 $app->get('/searchMunicipio', function (Request $request, Response $response) {
     // Obtener el parámetro 'municipio' desde la URL
     $searchTerm = $request->getQueryParams()['municipio'] ?? '';
+
     // Instancia de la clase Read
     $read = new Read('energia');
 
@@ -74,11 +79,5 @@ $app->get('/searchMunicipio', function (Request $request, Response $response) {
         return $response->withHeader('Content-Type', 'application/json');
     }
 });
-
-$app->get('/hola/{nombre}', function ($request, $response, $args) {
-    $response->getBody()->write("Hola, " . $args['nombre']);
-    return $response;
-});
-
 
 $app->run();

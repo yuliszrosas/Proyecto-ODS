@@ -202,7 +202,6 @@ header {
 	align-items: center;
 	justify-content: flex-start;
 }
-
 .card-flex{
 	display: flex;
 	flex-direction: column;
@@ -291,7 +290,7 @@ th {
 .card-head {
     flex-direction: column; /* Coloca los elementos en columna */
     align-items: center; /* Centra horizontalmente */
-    justify-content: center; /* Centra verticalmente */
+    justify-content: justify; /* Centra verticalmente */
     height: 100%; /* Asegura que use toda la altura disponible */
     text-align: center; /* Centra el texto */
 	display: flex;
@@ -356,6 +355,12 @@ th {
     transform: translateY(0); /* Restaura posición */
 }
 
+.card-info img {
+    width: 100%; /* Fuerza a la imagen a ocupar todo el ancho */
+    height: 100%; /* Fuerza a la imagen a ocupar todo el alto */
+    object-fit: cover; /* Asegura que la imagen se recorte y no se deforme */
+}
+
 /* Adaptación para pantallas pequeñas */
 @media (max-width: 768px) {
     .btn {
@@ -404,6 +409,7 @@ th {
     background: #fff;
     outline: none;
 	color: #aaa;
+    
 }
 
 .form-control:focus {
@@ -510,7 +516,15 @@ textarea.form-control {
 	padding: 20px;
 	background-color: #ffffff;
 }
-
+.card-tarjet {
+    background: #fff;
+    box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #242121;
+	border-radius: 20px;
+	padding: 40px;
+    width: 100%;          /* Hace que cada tarjeta ocupe todo el ancho de su contenedor */
+    margin-bottom: 10px;  /* Espacio entre las tarjetas, puedes ajustarlo */
+}
 /* Añadir una sombra cuando se pasa el ratón por encima */
 .dispositivos-container:hover {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -518,6 +532,7 @@ textarea.form-control {
 
 /*card-single*/
 .card-single {
+    
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
@@ -530,9 +545,55 @@ textarea.form-control {
     display: flex;
     flex-direction: column; /* Asegura que el contenido se apile verticalmente */
     align-items: center; /* Centra el contenido horizontalmente */
+    position: relative; /* Asegura que la imagen esté contenida */
+    overflow: hidden; /* Evita que la imagen se salga del contenedor */
 }
 
 .card-info {
     width: 100%; /* O un valor específico */
     padding: 10px; /* Espaciado interno */
+    position: relative; /* Asegura que la imagen esté contenida */
+    overflow: hidden; /* Evita que la imagen se salga del contenedor */
+}
+.question {
+    margin-bottom: 10px; /* Espacio de 10px debajo de cada div */
+}
+.centro-texto {
+    text-align: center; /* Centra el contenido dentro del p */
+    margin: 0 auto;     /* Centra el p en su contenedor si tiene un ancho */
+}
+
+.form-control-result{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #fff;
+    outline: none;
+	color: #aaa;
+    margin-bottom: 20px; /* Espacio de 10px debajo de cada div */
+}
+
+.form-control-result:focus {
+    border-color: #4285f4;
+    box-shadow: 0 0 4px rgba(66, 133, 244, 0.4);
+}
+
+.form-control-result:focus + .floating-label,
+.form-control-result:not(:placeholder-shown) + .floating-label {
+    top: -10px;
+    font-size: 12px;
+    color: #4285f4;
+}
+
+textarea.form-control-result {
+    resize: none;
+    height: 100px;
+}
+
+.custom-label {
+    color: #000000; /* Cambiar el color del texto */
+    font-weight: normal; /* Remover negritas si es necesario */
 }

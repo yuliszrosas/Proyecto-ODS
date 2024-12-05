@@ -64,5 +64,31 @@ class Read extends DataBase {
         }
     }
 
+    public function contarEstado() {
+        // Consulta SQL para obtener los 5 estados con más consumo de gas LP, leña y gas natural
+        $query = "
+            SELECT 
+                estado,
+                SUM(CASE WHEN lp = 'si' THEN 1 ELSE 0 END) AS contarLP,
+                SUM(CASE WHEN lena = 'si' THEN 1 ELSE 0 END) AS contarLena,
+                SUM(CASE WHEN gasnatural = 'si' THEN 1 ELSE 0 END) AS contarGasNatural
+            FROM reporte
+            GROUP BY estado
+            ORDER BY contarLP DESC, contarLena DESC, contarGasNatural DESC
+            LIMIT 5
+        ";
+        
+        $result = $this->conexion->query($query);
+        
+        $data = [];
+        
+        // Almacenamos los resultados en el array $data para usarlos posteriormente
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        
+        return $data;
+    }
+
 }
 ?>

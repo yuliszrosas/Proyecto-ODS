@@ -111,18 +111,22 @@
 							<div class="form-group">
 								<h2 >Calculadora de ahorro de gas LP</h2>
 							</div>
+							<div class="question">
+								<label for="usaEnergia"><strong>¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</strong></label>
+							</div>
 							<div class="form-group">
 								<select id="usaEnergia" name="usaEnergia" class="form-control" >
-									<option value="" >¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</option>
+									<option value="" >Selecciona una respuesta</option>
 									<option value="si">Sí</option>
 									<option value="no">No</option>
 								</select>
 							</div>
-
+							<div class="question">
+								<label for="estado"><strong>Seleccione un estado</strong></label>
+							</div>
 							<div class="form-group">
-								<label for="estado">Estado:</label>
 								<select id="estado" name="estado" class="form-control">
-									<option value="">Seleccione un estado</option>
+									<option value="">Selecciona una respuesta</option>
 									<option value="Aguascalientes">Aguascalientes</option>
 									<option value="Baja California">Baja California</option>
 									<option value="Baja California Sur">Baja California Sur</option>
@@ -157,31 +161,40 @@
 									<option value="Zacatecas">Zacatecas</option>
 								</select>
 							</div>
-					
-							 <!-- Estado: lista desplegable -->
+							<div class="question">
+								<label for="municipio"><strong>Seleccione un municipio</strong></label>
+							</div>
 							 <div class="form-group">
 								<select id="municipio" class="form-control" >
-									<option value="">Seleccione su municipio</option>
+									<option value="">Selecciona una respuesta</option>
 								</select>
 							</div>
-
+							<div class="question">
+								<label for="usalen"><strong>¿Usa leña en su hogar?</strong></label>
+							</div>
 							<div class="form-group">
 								<select id="usalen" class="form-control" >
-									<option value="" >¿Usa leña en su hogar?</option>
+									<option value="" >Selecciona una respuesta</option>
 									<option value="si">Sí</option>
 									<option value="no">No</option>
 								</select>
+							</div>
+							<div class="question">
+								<label for="usaGas"><strong>¿Usa gas natural en su hogar?</strong></label>
 							</div>
 							<div class="form-group">
 								<select id="usaGas" class="form-control" >
-									<option value="" >¿Usa gas natural en su hogar?</option>
+									<option value="" >Selecciona una respuesta</option>
 									<option value="si">Sí</option>
 									<option value="no">No</option>
 								</select>
 							</div>
+							<div class="question">
+								<label for="usaLP"><strong>¿Usa gas LP en su hogar?</strong></label>
+							</div>
 							<div class="form-group">
 								<select id="usaLP" class="form-control"  >
-									<option value="" >¿Usa gas LP en su hogar?</option>
+									<option value="" >Selecciona una respuesta</option>
 									<option value="si">Sí</option>
 									<option value="no">No</option>
 								</select>
@@ -196,14 +209,19 @@
 							</div>		
 							<!-- ¿Cuántos cilindros o kilos de gas LP utiliza al mes? -->
 							<div class="form-group" id="cantidadCilindros" style="display: none;">
-								<input type="number"  id="gas-amount" class="form-control" placeholder="Cantidad en cilindros/litros al mes" min="0" >
+								<div class="question">
+									<label for="gas-amount"><strong>¿Cuántos litros/cilindros de gas utiliza al mes?</strong></label>
+								</div>
+								<input type="number"  id="gas-amount" class="form-control" placeholder="Ingrese una cantidad" min="0" >
 							</div>	
 							<div class="form-group" id="mensajeAhorro" style="display: none;">
-								<h4>El uso de energías limpias, como calentadores de agua solar, puede representar un ahorro significativo en dinero y combustible. Además, contribuye a la lucha contra el cambio climático al reducir las emisiones de gases de efecto invernadero.</h4>
+								<span>El uso de energías limpias, como calentadores de agua solar, puede representar un ahorro significativo en dinero y combustible. Además, contribuye a la lucha contra el cambio climático al reducir las emisiones de gases de efecto invernadero.</span>
 							</div>
 							<div class="form-group">
 								<div class="form-control">
-									<h4>Fecha del reporte</h4>
+									<div class="question">
+										<label for="fecha"><strong>Fecha del reporte</strong></label>
+									</div>
 								</div>
 								<div class="form-control">
 									<input type="date" id="fecha" class="form-control">
@@ -226,30 +244,30 @@
 												<h2>Datos Enviados</h2>
 											</div>
 											<!-- Campos no editables con <label> -->
-											<div class="form-control">
-												<label><strong>¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</strong></label>
-												<p id="label-usaEnergia"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Municipio:</strong></label>
-												<p id="label-municipio"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Tipos de combustible que usa:</strong></label>
-												<p id="label-tipoGas"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Cantidad en cilindros al mes(LP):</strong></label>
-												<p id="label-cantidadCilindros"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Cantidad en litros al mes(LP):</strong></label>
-												<p id="label-litrosGas"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Fecha del reporte:</strong></label>
-												<p id="label-fecha"></p>
-											</div><br>
+											<div class="form-control-result">
+												<label><strong>¿Consideraría usar energías renovables para reducir su consumo de Gas LP?</strong></label><br>
+												<span id="label-usaEnergia" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Municipio:</strong></label><br>
+												<span  id="label-municipio" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Tipos de combustible que usa:</strong></label><br>
+												<span  id="label-tipoGas" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Cantidad en cilindros al mes(LP):</strong></label><br>
+												<span  id="label-cantidadCilindros" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Cantidad en litros al mes(LP):</strong></label><br>
+												<span  id="label-litrosGas" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Fecha del reporte:</strong></label><br>
+												<span  id="label-fecha" class="custom-label"></span>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -265,30 +283,30 @@
 												<h2>Resultado de ahorro de gas LP</h2>
 											</div>
 											<!-- Campos no editables con <label> -->
-											<div class="form-control">
-												<label><strong>Estado:</strong></label>
-												<p id="label-estado"></p>
+											<div class="form-control-result">
+												<label><strong>Estado:</strong></label><br>
+												<span  id="label-estado" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Municipio</strong></label><br>
+												<span   id="label-municipioR" class="custom-label"></span>
+											</div>
+											<div class="form-control-result">
+												<label><strong>Precio por Kilo:</strong></label><br>
+												<span   id="label-kilo" class="custom-label"></span >
+											</div>
+											<div class="form-control-result">
+												<label><strong>Precio por litro:</strong></label><br>
+												<span   id="label-litro" class="custom-label"></span >
 											</div><br>
-											<div class="form-control">
-												<label><strong>Municipio</strong></label>
-												<p id="label-municipioR"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Precio por Kilo:</strong></label>
-												<p id="label-kilo"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Precio por litro:</strong></label>
-												<p id="label-litro"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Gasto estimado mensual:</strong></label>
-												<p id="label-promedio"></p>
-											</div><br>
-											<div class="form-control">
-												<label><strong>Ahorro estimado con Calentador Solar:</strong></label>
-												<p id="label-ahorro"></p>
-											</div><br>
+											<div class="form-control-result">
+												<label><strong>Gasto estimado mensual:</strong></label><br>
+												<span   id="label-promedio" class="custom-label"></span >
+											</div>
+											<div class="form-control-result">
+												<label><strong>Ahorro estimado con Calentador Solar:</strong></span ><br>
+												<span   id="label-ahorro" class="custom-label"></span >
+											</div>
 										</div>
 									</div>
 								</div>
@@ -328,8 +346,8 @@
 									<canvas id="combustibleChart"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Dependencia de combustibles fósiles en viviendas</span>
-											<small>Porcentaje de viviendas que utilizan Gas LP, leña y gas natural como fuentes principales de energía</small>
+											<span>Dependencia de combustibles fósiles en viviendas</span><br>
+											<small>Número de personas que utilizan Gas LP, leña y gas natural como fuentes principales de energía</small>
 											<button id="verCombustibles" class="btn" >Ver más detalles</button>
 										</div>
 									</div>
@@ -341,7 +359,7 @@
 									<canvas id="solarChart"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Adopción de energías renovables en viviendas</span>
+											<span>Adopción de energías renovables en viviendas</span><br>
 											<small>Porcentaje de viviendas que tienen calentadores solares de agua en cada estado.</small>
 											<button id="verViviendas" class="btn" >Ver más detalles</button>
 										</div>
@@ -354,7 +372,7 @@
 									<canvas id="GraficaViviendas"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Gasto promedio trimestral en vivienda y combustibles (Pesos)</span>
+											<span>Gasto promedio trimestral en vivienda y combustibles (Pesos)</span><br>
 											<small>Evolución del gasto promedio trimestral en vivienda y combustibles, expresado en pesos, a lo largo del tiempo</small>
 											<button id="verMas" class="btn" >Ver más detalles</button>
 										</div>
@@ -366,8 +384,17 @@
 								<div class="card-single-info">
 									<div class="card-head-info" id="descripcion"></div>
 								</div>
+								<table id="datosCombustibles">
+									<thead>
+										<tr>
+											<th>Tipo de combustible</th>
+											<th>Número de personasque lo usan</th>
+										</tr>
+									</thead>
+									<tbody id="dataTable2">
+									</tbody>
+								</table>
 								<table id="datosSolar">
-									
 									<thead>
 										<tr>
 											<th>Estado</th>
@@ -376,9 +403,7 @@
 										</tr>
 									</thead>
 									<tbody id="dataTable">
-										<!-- Datos cargados dinámicamente -->
 									</tbody>
-									
 								</table>
 								<table id="datosGasto">
 									<thead >
@@ -388,33 +413,41 @@
 										</tr>
 									</thead>
 									<tbody id="dataTable3">
-										<!-- Datos cargados dinámicamente -->
 									</tbody>
 								</table>
 								
 							</div>
-
 							<!-- Políticas Públicas -->
 							<div class="card-single">
 								<div class="card-flex">
+									<canvas id="imgReferencia"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Políticas Públicas para la Energía Sostenible</span>
-											<small>Conozca las políticas diseñadas para promover la transición a energías renovables y el ahorro energético</small>
-											<a href="https://www.gob.mx/sener/articulos/politicas-publicas-del-sector-energetico" class="btn">Leer más</a>										</div>
+											<div class ="card-tarjet" >
+												<span>Políticas Públicas para la Energía Sostenible</span><br>
+												<small>Conozca las políticas diseñadas para promover la transición a energías renovables y el ahorro energético</small><br>
+												<a href="https://www.gob.mx/sener/articulos/politicas-publicas-del-sector-energetico" class="btn">Leer más</a>		
+											</div>
+											<div class ="card-tarjet" >
+												<span>¡Obtén tu Cupón de Asesoría Solar!</span><br>
+												<small>Asesoría gratuita sobre la instalación de calentadores solares en tu hogar</small><br>
+												<a href="https://www.facebook.com/p/Paneles-y-Calentadores-Solares-S%C3%A1nchez-100035477876277/?locale=es_LA" class="btn">Solicitar Cupón</a>
+												<!--<button class="btn" onclick="window.location.href='ruta_a_asesoria.html'" >Solicitar Cupón</button>-->
+											</div>
+										</div>
 									</div>
 								</div>
+
 							</div>
 			
 							<!-- Cupón -->
 							<div class="card-single">
-								<div class="card-flex">
+								<div class="card-flex ">
+									<canvas id="GraficaRadar"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>¡Obtén tu Cupón de Asesoría Solar!</span>
-											<small>Asesoría gratuita sobre la instalación de calentadores solares en tu hogar</small>
-											<a href="https://www.facebook.com/p/Paneles-y-Calentadores-Solares-S%C3%A1nchez-100035477876277/?locale=es_LA" class="btn">Solicitar Cupón</a>
-											<!--<button class="btn" onclick="window.location.href='ruta_a_asesoria.html'" >Solicitar Cupón</button>-->
+											<span>Consumo de Combustibles por Estado: Gas LP, Leña y Gas Natural</span><br>
+											<small>5 estados con mayor consumo de Gas LP, leña y gas natural. Los valores reflejan la cantidad de personas que utilizan cada tipo de combustible en su hogar, con base en las respuestas obtenidas en una encuesta.</small>
 										</div>
 									</div>
 								</div>
@@ -426,9 +459,8 @@
 									<canvas id="GraficaPastel"></canvas>
 									<div class="card-info">
 										<div class="card-head">
-											<span>Estadísticas de Consumo de Energía</span>
-											<small>Datos sobre el consumo de energía en los hogares, incluyendo un desglose por tipo de energía utilizada.</small>
-											<button class="btn" onclick="window.location.href='ruta_a_estadisticas.html'">Ver Estadísticas</button>
+											<span>Preferencias sobre el Uso de Energías Renovables</span><br>
+											<small>Esta gráfica refleja la disposición de las personas a adoptar energías renovables como alternativa al consumo de Gas LP. Representa las respuestas categorizadas como "Sí" y "No", lo que proporciona una visión clara del nivel de aceptación o rechazo hacia el uso de tecnologías más sostenibles. .</small>
 										</div>
 									</div>
 								</div>
